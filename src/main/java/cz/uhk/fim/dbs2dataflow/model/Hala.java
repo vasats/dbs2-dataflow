@@ -9,4 +9,8 @@ public class Hala {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer halaID;
+    
+    @JoinColumn(name = "TovarnaID")
+    @ManyToOne
+    private Tovarna tovarna;
 }

@@ -4,12 +4,10 @@ import jakarta.persistence.*;
 
 @Entity
 @Table
-public class Zarizeni {
-    @Id()
+public class Adresa {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @JoinColumn(name = "HalaID")
-    @ManyToOne
-    private Hala hala;
+    
 }

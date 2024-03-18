@@ -4,12 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table
-public class Zarizeni {
-    @Id()
+public class WebovyUcet {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @JoinColumn(name = "HalaID")
-    @ManyToOne
-    private Hala hala;
 }

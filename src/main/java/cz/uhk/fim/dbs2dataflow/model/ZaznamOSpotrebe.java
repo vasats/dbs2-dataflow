@@ -11,9 +11,9 @@ public class ZaznamOSpotrebe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer zaznamOSpotrebeID;
-    @Column
+    @Column(name = "spotreba")
     private Float spotreba;
-    @Column
+    @Column(name = "Datumcas")
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime datumcas;
     @ManyToOne
