@@ -1,4 +1,4 @@
-﻿package cz.uhk.fim.dbs2dataflow.model;
+package cz.uhk.fim.dbs2dataflow.model;
 
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
