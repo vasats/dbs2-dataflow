@@ -1,13 +1,16 @@
 package cz.uhk.fim.dbs2dataflow.controller;
 
 
+import cz.uhk.fim.dbs2dataflow.exception.DataNotFoundException;
 import cz.uhk.fim.dbs2dataflow.model.WebovyUcet;
 import cz.uhk.fim.dbs2dataflow.service.SpotrebaService;
+import cz.uhk.fim.dbs2dataflow.service.TovarnaService;
 import cz.uhk.fim.dbs2dataflow.service.WebovyUcetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -20,6 +23,9 @@ public class MainController {
     @Autowired
     WebovyUcetService webService;
 
+    @Autowired
+    TovarnaService tovarnaService;
+
     @GetMapping(value = "/login")
     private String showLoginForm(){
 
@@ -28,8 +34,12 @@ public class MainController {
     }
 
     @GetMapping(value = "/tovarna/{id}")
-    private String showFactoryInfo(Model model){
+    private String showFactoryInfo(@PathVariable("id") Integer id, Model model){
+        try {
+            model.addAttribute(tovarnaService.getTovarnaById(id));
+        } catch (DataNotFoundException e){
 
+        }
 
         return "tovarna";
     }
