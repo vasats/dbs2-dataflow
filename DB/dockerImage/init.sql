@@ -196,3 +196,19 @@ GO
 ALTER TABLE [Zaznamospotrebe] ADD CONSTRAINT [FK_Zaznamospotrebe_Zarizeni]
     FOREIGN KEY ([ZarizeniID]) REFERENCES [Zarizeni] ([ZarizeniID]) ON DELETE No Action ON UPDATE No Action
 GO
+
+CREATE VIEW spotrebaInfo
+AS SELECT zarizeni.oznaceni,
+          zarizeni.nazev,
+          zaznamospotrebe.spotreba,
+          hala.halaid,
+          DATEPART(DAYOFYEAR,zaznamospotrebe.datumcas)AS denVRoce,
+          DATEPART(HOUR,zaznamospotrebe.datumcas)AS hodina,
+          zaznamopouziti.zamestnanecid
+   FROM zarizeni INNER JOIN zaznamospotrebe
+                            ON zarizeni.zarizeniid=zaznamospotrebe.zarizeniid
+                 INNER JOIN hala
+                            ON zarizeni.halaId=hala.halaId
+                 INNER JOIN zaznamOPouziti
+                            ON zarizeni.zarizeniId=zaznamOPouziti.zarizeniId
+GO
