@@ -1,3 +1,8 @@
+create database energie
+go
+use energie
+go
+
 CREATE TABLE [Adresa]
 (
     [Cislopopisne] char(10) NOT NULL,
@@ -196,3 +201,6 @@ GO
 ALTER TABLE [Zaznamospotrebe] ADD CONSTRAINT [FK_Zaznamospotrebe_Zarizeni]
     FOREIGN KEY ([ZarizeniID]) REFERENCES [Zarizeni] ([ZarizeniID]) ON DELETE No Action ON UPDATE No Action
 GO
+
+insert into Webovyucet (Heslohash, Jmeno, Typuctu)
+values ('Heslo1', 'testJmeno1', 'testTyp1')
