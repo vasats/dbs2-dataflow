@@ -203,4 +203,4 @@ ALTER TABLE [Zaznamospotrebe] ADD CONSTRAINT [FK_Zaznamospotrebe_Zarizeni]
 GO
 
 insert into Webovyucet (Heslohash, Jmeno, Typuctu)
-values ('Heslo1', 'testJmeno1', 'testTyp1')
+values ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'testJmeno1', 'testTyp1')
