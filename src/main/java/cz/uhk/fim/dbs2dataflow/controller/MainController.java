@@ -43,12 +43,10 @@ public class MainController {
     }
 
     @GetMapping(value = "/test")
-    @ResponseBody
-    private String test(){
-        List<WebovyUcet> spotrebes = webService.getAll();
-        StringBuilder builder = new StringBuilder();
-        spotrebes.forEach(e -> builder.append(e.getJmeno() + " " + e.getTypuctu()));
-        return builder.toString();
+    private String test(Model model){
+        List<WebovyUcet> ucets = webService.getAll();
+        model.addAttribute("ucty",ucets);
+        return "test";
     }
     @RequestMapping(value = "/")
     private String fallback(){
