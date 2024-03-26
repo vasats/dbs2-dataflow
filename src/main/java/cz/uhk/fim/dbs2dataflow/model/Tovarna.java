@@ -12,4 +12,7 @@ public class Tovarna {
     @JoinColumn(name = "AdresaID")
     @OneToOne
     private Adresa adresa;
+    private String foto;
+    private String nazev;
+
 }

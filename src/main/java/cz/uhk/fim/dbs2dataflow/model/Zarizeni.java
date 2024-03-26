@@ -12,4 +12,6 @@ public class Zarizeni {
     @JoinColumn(name = "HalaID")
     @ManyToOne
     private Hala hala;
+    private String oznaceni;
+    private String nazev;
 }
