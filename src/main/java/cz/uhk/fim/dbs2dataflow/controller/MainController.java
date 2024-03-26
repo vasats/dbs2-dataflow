@@ -2,6 +2,7 @@ package cz.uhk.fim.dbs2dataflow.controller;
 
 
 import cz.uhk.fim.dbs2dataflow.exception.DataNotFoundException;
+import cz.uhk.fim.dbs2dataflow.model.Tovarna;
 import cz.uhk.fim.dbs2dataflow.model.WebovyUcet;
 import cz.uhk.fim.dbs2dataflow.service.SpotrebaService;
 import cz.uhk.fim.dbs2dataflow.service.TovarnaService;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -25,8 +25,9 @@ public class MainController {
     @Autowired
     TovarnaService tovarnaService;
     @GetMapping(value = "/main")
-    public String showMainPage(){
-
+    public String showMainPage(Model model){
+        List<Tovarna> tovarny = tovarnaService.getAll();
+        model.addAttribute("tovarny",tovarny);
 
         return "index";
     }
@@ -43,12 +44,10 @@ public class MainController {
     }
 
     @GetMapping(value = "/test")
-    @ResponseBody
-    private String test(){
+    private String test(Model model){
         List<WebovyUcet> spotrebes = webService.getAll();
-        StringBuilder builder = new StringBuilder();
-        spotrebes.forEach(e -> builder.append(e.getJmeno() + " " + e.getTypuctu()));
-        return builder.toString();
+        model.addAttribute("ucty", spotrebes);
+        return "test";
     }
     @RequestMapping(value = "/")
     private String fallback(){

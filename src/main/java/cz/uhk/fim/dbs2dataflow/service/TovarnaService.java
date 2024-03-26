@@ -5,6 +5,7 @@ import cz.uhk.fim.dbs2dataflow.repository.TovarnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,5 +18,13 @@ public class TovarnaService {
             return optional.get();
         }
         throw new RuntimeException("tovarna nebyla nalezena");
+    }
+
+    public List<Tovarna> getAll(){
+        List<Tovarna> tovarny = (List<Tovarna>) repository.findAll();
+        if (tovarny.isEmpty()){
+            throw new RuntimeException("tovarny se nepodařilo načíst");
+        }
+        return tovarny;
     }
 }
