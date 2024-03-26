@@ -25,8 +25,9 @@ public class MainController {
     @Autowired
     TovarnaService tovarnaService;
     @GetMapping(value = "/main")
-    public String showMainPage(){
-
+    public String showMainPage(Model model){
+        List<Tovarna> tovarny = tovarnaService.getAll();
+        model.addAttribute("tovarny",tovarny);
 
         return "index";
     }
@@ -43,12 +44,10 @@ public class MainController {
     }
 
     @GetMapping(value = "/test")
-    @ResponseBody
-    private String test(){
+    private String test(Model model){
         List<WebovyUcet> spotrebes = webService.getAll();
-        StringBuilder builder = new StringBuilder();
-        spotrebes.forEach(e -> builder.append(e.getJmeno() + " " + e.getTypuctu()));
-        return builder.toString();
+        model.addAttribute("ucty", spotrebes);
+        return "test";
     }
     @RequestMapping(value = "/")
     private String fallback(){
