@@ -11,13 +11,11 @@ public class ZaznamOSpotrebe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer zaznamOSpotrebeID;
-    @Column(name = "spotreba")
     private Float spotreba;
-    @Column(name = "Datumcas")
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime datumcas;
     @ManyToOne
-    @JoinColumn(name = "ZarizeniID",nullable = false)
+    @JoinColumn(name = "ZarizeniID")
     private Zarizeni zarizeni;
     
     
