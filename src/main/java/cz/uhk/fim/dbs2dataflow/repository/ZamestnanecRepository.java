@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ZamestnanecRepository extends CrudRepository<Zamestnanec,Integer> {
     Zamestnanec findZamestnanecByWebovyUcet(WebovyUcet ucet);
+    Zamestnanec findZamestnanecById(int id);
 
 }
