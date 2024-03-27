@@ -41,6 +41,16 @@ public class MainController {
         return "tovarna";
     }
 
+    @GetMapping(value = "/hala/{id}")
+    private String showHalaInfo(@PathVariable("id") Integer id, Model model){
+        try {
+            model.addAttribute("hala",tovarnaService.getTovarnaById(id));
+        } catch (DataNotFoundException e){
+
+        }
+        return "hala";
+    }
+
     @GetMapping(value = "/test")
     @ResponseBody
     private String test(){
@@ -51,7 +61,6 @@ public class MainController {
     }
     @RequestMapping(value = "/")
     private String fallback(){
-        //todo remove this
-        return "redirect:/test";
+        return "redirect:/main";
     }
 }
