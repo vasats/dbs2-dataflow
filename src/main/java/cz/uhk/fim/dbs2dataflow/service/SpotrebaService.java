@@ -1,5 +1,6 @@
 package cz.uhk.fim.dbs2dataflow.service;
 
+import cz.uhk.fim.dbs2dataflow.model.Hala;
 import cz.uhk.fim.dbs2dataflow.model.WebovyUcet;
 import cz.uhk.fim.dbs2dataflow.model.ZaznamOSpotrebe;
 import cz.uhk.fim.dbs2dataflow.repository.ZaznamOSpotrebeRepository;
@@ -16,6 +17,9 @@ public class SpotrebaService {
 
     public List<ZaznamOSpotrebe> getSpotreby(){
         return (List<ZaznamOSpotrebe>) repository.findAll();
+    }
+    public List<ZaznamOSpotrebe> getByHala(Hala hala){
+        return repository.findAllByZarizeniHala(hala);
     }
 
 }
