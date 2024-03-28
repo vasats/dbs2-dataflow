@@ -2,8 +2,10 @@ package cz.uhk.fim.dbs2dataflow.controller;
 
 
 import cz.uhk.fim.dbs2dataflow.exception.DataNotFoundException;
+import cz.uhk.fim.dbs2dataflow.model.SeznamZamestnancuSmeny;
 import cz.uhk.fim.dbs2dataflow.model.Tovarna;
 import cz.uhk.fim.dbs2dataflow.model.WebovyUcet;
+import cz.uhk.fim.dbs2dataflow.service.SeznamZamestnancuService;
 import cz.uhk.fim.dbs2dataflow.service.SpotrebaService;
 import cz.uhk.fim.dbs2dataflow.service.TovarnaService;
 import cz.uhk.fim.dbs2dataflow.service.WebovyUcetService;
@@ -24,7 +26,9 @@ public class MainController {
 
     @Autowired
     TovarnaService tovarnaService;
-    @GetMapping(value = "/main")
+    @Autowired
+    SeznamZamestnancuService seznamZamestnancuService;
+    @GetMapping(value = "/")
     public String showMainPage(Model model){
         List<Tovarna> tovarny = tovarnaService.getAll();
         model.addAttribute("tovarny",tovarny);
@@ -50,6 +54,14 @@ public class MainController {
 
         }
         return "hala";
+    }
+    @GetMapping(value = "/smena/{smenaID}/{halaID}")
+    private String smenaDetail(@PathVariable("smenaID") int smenaID,
+                               @PathVariable("halaID") int halaID, Model model){
+
+        List<SeznamZamestnancuSmeny> seznam = seznamZamestnancuService.getAllbyHalaIDSmenaID(halaID, smenaID);
+        model.addAttribute("seznamZamestnancuSmeny", seznam);
+        return "smena";
     }
 
     @GetMapping(value = "/test")
