@@ -202,5 +202,35 @@ ALTER TABLE [Zaznamospotrebe] ADD CONSTRAINT [FK_Zaznamospotrebe_Zarizeni]
     FOREIGN KEY ([ZarizeniID]) REFERENCES [Zarizeni] ([ZarizeniID]) ON DELETE No Action ON UPDATE No Action
 GO
 
+CREATE LOGIN WebServer
+    WITH PASSWORD = 'nj4658g465huisca';
+GO
+
+CREATE PROCEDURE updateSmenaInclusion @ZamestnanecIDtoCheck int, @SmenaIdToCheck int, @HalaIdToCheck int
+AS
+    if (@ZamestnanecIDtoCheck not in (SELECT T.ZamestnanecID
+        from Seznamzamestnancusmeny T
+        where T.HalaID=@HalaIdToCheck and T.SmenaID=@SmenaIdToCheck))
+
+        Insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
+         values (@HalaIdToCheck, @ZamestnanecIDtoCheck, @SmenaIdToCheck)
+go
+
+CREATE TRIGGER newUse ON Zaznamopouziti
+    instead of INSERT AS
+    Begin TRANSACTION;
+
+    Declare @HalaID as int;
+    set @HalaID = (select Z.HalaID from Zarizeni Z where Z.ZarizeniID = inserted.ZarizeniID);
+    Declare @SmenaID as int;
+
+    updateSmenaInclusion ZamestnanecID, @SmenaID, @HalaID
+
+
+
+
+
+
+
 insert into Webovyucet (Heslohash, Jmeno, Typuctu)
 values ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'testJmeno1', 'testTyp1')
