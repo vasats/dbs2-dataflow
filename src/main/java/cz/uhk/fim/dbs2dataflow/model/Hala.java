@@ -13,4 +13,6 @@ public class Hala {
     @JoinColumn(name = "TovarnaID")
     @ManyToOne
     private Tovarna tovarna;
+
+    private String oznaceni;
 }

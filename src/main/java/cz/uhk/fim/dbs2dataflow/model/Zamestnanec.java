@@ -16,4 +16,10 @@ public class Zamestnanec {
     @JoinColumn(name = "WebovyUcetID")
     @OneToOne
     private WebovyUcet webovyUcet;
+
+    private String email;
+    private String jmeno;
+    private String prijmeni;
+    private String rodneCislo;
+    private String telefon;
 }
