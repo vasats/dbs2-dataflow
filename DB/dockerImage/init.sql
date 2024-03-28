@@ -234,3 +234,11 @@ CREATE TRIGGER newUse ON Zaznamopouziti
 
 insert into Webovyucet (Heslohash, Jmeno, Typuctu)
 values ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'testJmeno1', 'testTyp1')
+
+insert into Adresa (Cislopopisne, Psc, Ulice)
+    values (215,55102,N'Hradecká')
+
+go
+insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID)
+values (2.31,'/foto1','Tovarna Panda', 1);
+go
