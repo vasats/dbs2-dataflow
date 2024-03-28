@@ -10,6 +10,7 @@ import java.time.LocalTime;
 public class Smena {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SmenaID")
     private Integer id;
     private LocalTime casDo;
     private LocalTime casOd;
