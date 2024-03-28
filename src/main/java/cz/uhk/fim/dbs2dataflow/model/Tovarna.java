@@ -14,5 +14,8 @@ public class Tovarna {
     private Adresa adresa;
     private String foto;
     private String nazev;
+    //todo change datatype
+    private float cenazakwh;
+
 
 }
