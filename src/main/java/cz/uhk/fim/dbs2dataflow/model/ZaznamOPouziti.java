@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class ZaznamOPouziti {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ZaznamOPouzitiID")
     private Integer id;
     
     @ManyToOne

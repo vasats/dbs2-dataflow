@@ -7,4 +7,5 @@ public class SeznamZamestnancuSmeny {
     
     @EmbeddedId
     private SeznamZamestnancuID seznamZamestnancuID;
+
 }

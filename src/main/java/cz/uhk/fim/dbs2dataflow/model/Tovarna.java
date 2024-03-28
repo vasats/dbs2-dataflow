@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class Tovarna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TovarnaID")
     private Integer id;
     
     @JoinColumn(name = "AdresaID")
