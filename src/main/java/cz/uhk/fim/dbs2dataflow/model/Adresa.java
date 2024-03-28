@@ -8,6 +8,7 @@ public class Adresa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AdresaID")
     private Integer id;
+    @Column(name = "Cislopopisne")
     private String cisloPopisne;
     private String psc;
     private String ulice;
@@ -20,4 +21,5 @@ public class Adresa {
                 ", ulice='" + ulice + '\'' +
                 '}';
     }
+
 }

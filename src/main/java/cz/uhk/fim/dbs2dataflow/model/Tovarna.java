@@ -18,5 +18,43 @@ public class Tovarna {
     //todo change datatype
     private float cenazakwh;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Adresa getAdresa() {
+        return adresa;
+    }
+
+    public void setAdresa(Adresa adresa) {
+        this.adresa = adresa;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getNazev() {
+        return nazev;
+    }
+
+    public void setNazev(String nazev) {
+        this.nazev = nazev;
+    }
+
+    public float getCenazakwh() {
+        return cenazakwh;
+    }
+
+    public void setCenazakwh(float cenazakwh) {
+        this.cenazakwh = cenazakwh;
+    }
 }

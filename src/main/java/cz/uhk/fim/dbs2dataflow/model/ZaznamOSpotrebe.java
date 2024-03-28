@@ -17,7 +17,36 @@ public class ZaznamOSpotrebe {
     @ManyToOne
     @JoinColumn(name = "ZarizeniID")
     private Zarizeni zarizeni;
-    
-    
-    
+
+    public Integer getZaznamOSpotrebeID() {
+        return zaznamOSpotrebeID;
+    }
+
+    public void setZaznamOSpotrebeID(Integer zaznamOSpotrebeID) {
+        this.zaznamOSpotrebeID = zaznamOSpotrebeID;
+    }
+
+    public Float getSpotreba() {
+        return spotreba;
+    }
+
+    public void setSpotreba(Float spotreba) {
+        this.spotreba = spotreba;
+    }
+
+    public LocalDateTime getDatumcas() {
+        return datumcas;
+    }
+
+    public void setDatumcas(LocalDateTime datumcas) {
+        this.datumcas = datumcas;
+    }
+
+    public Zarizeni getZarizeni() {
+        return zarizeni;
+    }
+
+    public void setZarizeni(Zarizeni zarizeni) {
+        this.zarizeni = zarizeni;
+    }
 }

@@ -33,4 +33,28 @@ public class SeznamZamestnancuID implements Serializable {
     public int hashCode() {
         return Objects.hash(hala, zamestnanec, smena);
     }
+
+    public Hala getHala() {
+        return hala;
+    }
+
+    public void setHala(Hala hala) {
+        this.hala = hala;
+    }
+
+    public Zamestnanec getZamestnanec() {
+        return zamestnanec;
+    }
+
+    public void setZamestnanec(Zamestnanec zamestnanec) {
+        this.zamestnanec = zamestnanec;
+    }
+
+    public Smena getSmena() {
+        return smena;
+    }
+
+    public void setSmena(Smena smena) {
+        this.smena = smena;
+    }
 }

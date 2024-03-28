@@ -22,4 +22,36 @@ public class ZaznamOPouziti {
     private Zarizeni zarizeni;
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime datumCas;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Zamestnanec getZamestnanec() {
+        return zamestnanec;
+    }
+
+    public void setZamestnanec(Zamestnanec zamestnanec) {
+        this.zamestnanec = zamestnanec;
+    }
+
+    public Zarizeni getZarizeni() {
+        return zarizeni;
+    }
+
+    public void setZarizeni(Zarizeni zarizeni) {
+        this.zarizeni = zarizeni;
+    }
+
+    public LocalDateTime getDatumCas() {
+        return datumCas;
+    }
+
+    public void setDatumCas(LocalDateTime datumCas) {
+        this.datumCas = datumCas;
+    }
 }

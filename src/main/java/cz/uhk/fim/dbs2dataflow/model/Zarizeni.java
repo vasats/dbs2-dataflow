@@ -15,4 +15,36 @@ public class Zarizeni {
     private Hala hala;
     private String oznaceni;
     private String nazev;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Hala getHala() {
+        return hala;
+    }
+
+    public void setHala(Hala hala) {
+        this.hala = hala;
+    }
+
+    public String getOznaceni() {
+        return oznaceni;
+    }
+
+    public void setOznaceni(String oznaceni) {
+        this.oznaceni = oznaceni;
+    }
+
+    public String getNazev() {
+        return nazev;
+    }
+
+    public void setNazev(String nazev) {
+        this.nazev = nazev;
+    }
 }

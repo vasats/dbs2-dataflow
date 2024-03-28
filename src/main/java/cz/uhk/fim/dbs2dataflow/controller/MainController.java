@@ -28,7 +28,7 @@ public class MainController {
     TovarnaService tovarnaService;
     @Autowired
     SeznamZamestnancuService seznamZamestnancuService;
-    @GetMapping(value = "/")
+    @GetMapping(value = "/main")
     public String showMainPage(Model model){
         List<Tovarna> tovarny = tovarnaService.getAll();
         model.addAttribute("tovarny",tovarny);
