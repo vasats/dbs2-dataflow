@@ -198,17 +198,36 @@ ALTER TABLE [Zaznamospotrebe] ADD CONSTRAINT [FK_Zaznamospotrebe_Zarizeni]
 GO
 
 CREATE VIEW spotrebaInfo
-AS SELECT zarizeni.oznaceni,
-          zarizeni.nazev,
-          zaznamospotrebe.spotreba,
-          hala.halaid,
-          DATEPART(DAYOFYEAR,zaznamospotrebe.datumcas)AS denVRoce,
-          DATEPART(HOUR,zaznamospotrebe.datumcas)AS hodina,
-          zaznamopouziti.zamestnanecid
-   FROM zarizeni INNER JOIN zaznamospotrebe
-                            ON zarizeni.zarizeniid=zaznamospotrebe.zarizeniid
-                 INNER JOIN hala
-                            ON zarizeni.halaId=hala.halaId
-                 INNER JOIN zaznamOPouziti
-                            ON zarizeni.zarizeniId=zaznamOPouziti.zarizeniId
+AS SELECT Zarizeni.Oznaceni,
+          Zarizeni.Nazev,
+          Zaznamospotrebe.Spotreba,
+          Hala.HalaID,
+          DATEPART(DAYOFYEAR,Zaznamospotrebe.Datumcas)AS denVRoce,
+          DATEPART(HOUR,Zaznamospotrebe.Datumcas)AS hodina,
+          Zaznamopouziti.ZamestnanecID
+   FROM Zarizeni INNER JOIN Zaznamospotrebe
+                            ON Zarizeni.ZarizeniID=Zaznamospotrebe.ZarizeniID
+                 INNER JOIN Hala
+                            ON Zarizeni.HalaID=Hala.HalaID
+                 INNER JOIN Zaznamopouziti
+                            ON Zarizeni.ZarizeniID=Zaznamopouziti.ZarizeniID
 GO
+/*Napsat funkci co bude scitat spotreby jednotlivych tovaren, hal, zarizeni a zaznamu o spotrebe a pronasobi to cenou/kWh a vrati celkovou cenu spotreby.*/
+SELECT SUM(spotreba) AS celkova_spotreba
+FROM ZaznamOSpotrebe;
+
+CREATE FUNCTION CelkovaCenaSpotreby()
+    RETURNS DECIMAL(18,2)  -- Návratový datový typ je DECIMAL s přesností 18 číslic a 2 desetinnými místy
+AS
+BEGIN
+    DECLARE @CelkovaCena DECIMAL(18,2);  -- Deklarace proměnné pro uchování celkové ceny
+    -- Výpočet celkové ceny spotřeby pomocí součtu spotřeby v jednotlivých záznamech o spotřebě a ceny za kWh
+    SELECT @CelkovaCena = SUM(spotrebaInfo.Spotreba * cena.CenaZaKWh)
+    FROM spotrebaInfo
+             INNER JOIN cena ON spotrebaInfo.TovarnaID = cena.TovarnaID
+        AND spotrebaInfo.HalaID = cena.HalaID
+        AND spotrebaInfo.ZarizeniID = cena.ZarizeniID
+        AND spotrebaInfo.ZaznamID = cena.ZaznamID;
+    -- Návrat celkové ceny spotřeby
+    RETURN @CelkovaCena;
+END;
