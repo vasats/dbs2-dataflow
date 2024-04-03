@@ -16,10 +16,7 @@ public class Adresa {
     @Override
     public String toString() {
         return
-                psc + " " + ulice + cisloPopisne + '\'' +
-                ", psc='" + psc + '\'' +
-                ", ulice='" + ulice + '\'' +
-                '}';
+                psc + " " + ulice + " " + cisloPopisne;
     }
 
 }
