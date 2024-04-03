@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPOTŘEBA ENERGIÍ</title>
+    <title>HALA 1</title>
     <style>
         body {
             background-color: white;
@@ -13,38 +13,44 @@
             height: 100vh;
             margin: 0;
             position: relative;
+        }
 
+        .header-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: flex-start;
         }
 
         h1 {
-            text-align: center;
+            text-align: left;
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin: 0;
             border: 2px solid black;
+        }
+
+        #filtr {
+            margin-left: 20px;
         }
 
         table {
             border-collapse: collapse;
-            width: 60%;
+            width: 30%;
             margin: 1cm;
-            margin-top: 0.5px;
+            margin-top: 0.2px;
             position: absolute;
-            top: 250px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 150px;
+            left: 10px;
         }
 
         th, td {
             border: 2px solid #dddddd;
             text-align: left;
             padding: 12px;
-
         }
 
         th {
@@ -59,36 +65,29 @@
             background-color: white;
         }
 
-
     </style>
 
 </head>
 <body>
-<h1>SPOTŘEBA ENERGIÍ</h1>
-
+<div class="header-container">
+    <h1>HALA 1</h1>
+    <button id="filtr">Filtrovat podle data</button>
+</div>
 
 <table id="tovarna">
     <thead>
     <tr>
-        <th>NÁZEV TOVÁRNY</th>
-        <th>ADRESA</th>
-        <th>POČET HAL</th>
-        <th>CENA ZA KWH</th>
+        <th>Datum</th>
+        <th>Směna</th>
+        <th>Zařízeni</th>
+        <th>Spotřeba</th>
     </tr>
     </thead>
+
     <tbody>
     <tr th:each="e: ${tovarny}">
-        <td>
-            <a href="hala1.html">${e.nazev}</a>
-        </td>
-        <td th:text="${e.adresa.toString()}"></td>
-        <td th:text="${e.pocetHal}"></td>
-        <td th:text="${e.cenaZaKwh}"></td>
-    </tr>
     </tbody>
 </table>
-
-
 
 </body>
 </html>
