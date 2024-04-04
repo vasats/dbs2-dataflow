@@ -5,7 +5,7 @@ go
 
 CREATE TABLE [Adresa]
 (
-    [Cislopopisne] char(10) NOT NULL,
+    [Cislopopisne] varchar(10) NOT NULL,
     [Psc] char(5) NOT NULL,
     [Ulice] varchar(20) NULL,
     [AdresaID] int NOT NULL IDENTITY (1, 1)
@@ -202,9 +202,9 @@ ALTER TABLE [Zaznamospotrebe] ADD CONSTRAINT [FK_Zaznamospotrebe_Zarizeni]
     FOREIGN KEY ([ZarizeniID]) REFERENCES [Zarizeni] ([ZarizeniID]) ON DELETE No Action ON UPDATE No Action
 GO
 
-CREATE LOGIN WebServer
-    WITH PASSWORD = 'nj4658g465huisca';
-GO
+/*CREATE LOGIN WebServer
+    WITH PASSWORD = 'Nj4658g465huisca';
+GO*/
 
 CREATE PROCEDURE updateSmenaInclusion @ZamestnanecIDtoCheck int, @SmenaIdToCheck int, @HalaIdToCheck int
 AS
@@ -222,9 +222,17 @@ CREATE TRIGGER newUse ON Zaznamopouziti
 
     Declare @HalaID as int;
     set @HalaID = (select Z.HalaID from Zarizeni Z where Z.ZarizeniID = inserted.ZarizeniID);
+    Declare @DateTimeFrom as smalldatetime;
+    set @DateTimefrom = CONVERT(inserted.)
     Declare @SmenaID as int;
+    set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,inserted.Datumcas,CONVERT(smalldatetime,S.Datumod))  and );
 
     updateSmenaInclusion ZamestnanecID, @SmenaID, @HalaID
+
+    insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
+    values(inserted.Datumcas,inserted.ZamestnanecID,inserted.ZarizeniID)
+    commit transaction;
+    go;
 
 
 
