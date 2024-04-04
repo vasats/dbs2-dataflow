@@ -222,12 +222,13 @@ AS
 BEGIN
     DECLARE @CelkovaCena DECIMAL(18,2);  -- Deklarace proměnné pro uchování celkové ceny
     -- Výpočet celkové ceny spotřeby pomocí součtu spotřeby v jednotlivých záznamech o spotřebě a ceny za kWh
-    SELECT @CelkovaCena = SUM(spotrebaInfo.Spotreba * cena.CenaZaKWh)
+    --přepsat na zaznam o spotrebe
+    SELECT @CelkovaCena = SUM(zaznamOSpotrebe.Spotreba * Tovarna.CenaZaKWh)
     FROM spotrebaInfo
-             INNER JOIN cena ON spotrebaInfo.TovarnaID = cena.TovarnaID
-        AND spotrebaInfo.HalaID = cena.HalaID
-        AND spotrebaInfo.ZarizeniID = cena.ZarizeniID
-        AND spotrebaInfo.ZaznamID = cena.ZaznamID;
+             INNER JOIN Tovarna ON spotrebaInfo.TovarnaID = Tovarna.TovarnaID
+        AND spotrebaInfo.HalaID = Tovarna.HalaID
+        AND spotrebaInfo.ZarizeniID = Tovarna.ZarizeniID
+        AND spotrebaInfo.ZaznamID = Tovarna.ZaznamID;
     -- Návrat celkové ceny spotřeby
     RETURN @CelkovaCena;
 END;
