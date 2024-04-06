@@ -79,7 +79,7 @@
     <tbody>
     <tr th:each="e: ${tovarny}">
         <td>
-            <a href="hala1.html">${e.nazev}</a>
+            <a th:href="@{'/tovarna/'+${e.id}}" th:text="${e.nazev}"></a>
         </td>
         <td th:text="${e.adresa.toString()}"></td>
         <td th:text="${e.pocetHal}"></td>
