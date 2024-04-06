@@ -4,11 +4,9 @@ package cz.uhk.fim.dbs2dataflow.controller;
 import cz.uhk.fim.dbs2dataflow.exception.DataNotFoundException;
 import cz.uhk.fim.dbs2dataflow.model.SeznamZamestnancuSmeny;
 import cz.uhk.fim.dbs2dataflow.model.Tovarna;
+import cz.uhk.fim.dbs2dataflow.model.TovarnaInfo;
 import cz.uhk.fim.dbs2dataflow.model.WebovyUcet;
-import cz.uhk.fim.dbs2dataflow.service.SeznamZamestnancuService;
-import cz.uhk.fim.dbs2dataflow.service.SpotrebaService;
-import cz.uhk.fim.dbs2dataflow.service.TovarnaService;
-import cz.uhk.fim.dbs2dataflow.service.WebovyUcetService;
+import cz.uhk.fim.dbs2dataflow.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +26,18 @@ public class MainController {
     TovarnaService tovarnaService;
     @Autowired
     SeznamZamestnancuService seznamZamestnancuService;
+
+    @Autowired
+    HalaService halaService;
     @GetMapping(value = "/main")
     public String showMainPage(Model model){
         List<Tovarna> tovarny = tovarnaService.getAll();
-        model.addAttribute("tovarny",tovarny);
+        List<TovarnaInfo> tovarnyInfo = tovarny.stream()
+                .map((tovarna ->
+                        new TovarnaInfo(tovarna,
+                                halaService.getAmountByTovarna(tovarna))))
+                .toList();
+        model.addAttribute("tovarny",tovarnyInfo);
 
         return "index";
     }
