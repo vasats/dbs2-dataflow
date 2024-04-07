@@ -25,4 +25,8 @@ public class HalaService {
         List<Hala> halas = repository.findAllByTovarna(tovarna);
         return halas.size();
     }
+    public List<Hala> getByTovarnaId(Integer id){
+        List<Hala> halas = repository.findAllByTovarnaId(id);
+        return halas;
+    }
 }

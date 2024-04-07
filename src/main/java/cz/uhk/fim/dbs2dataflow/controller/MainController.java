@@ -45,11 +45,11 @@ public class MainController {
     @GetMapping(value = "/tovarna/{id}")
     private String showFactoryInfo(@PathVariable("id") Integer id, Model model){
         try {
-            model.addAttribute("tovarna",tovarnaService.getTovarnaById(id));
+            model.addAttribute("haly",halaService.getByTovarnaId(id));
         } catch (DataNotFoundException e){
 
         }
-        return "hala";
+        return "tovarna";
     }
 
     @GetMapping(value = "/hala/{id}")

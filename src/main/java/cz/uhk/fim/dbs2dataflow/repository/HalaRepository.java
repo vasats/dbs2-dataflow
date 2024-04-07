@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface HalaRepository extends CrudRepository<Hala, Integer> {
     List<Hala> findAllByTovarna(Tovarna tovarna);
+    List<Hala> findAllByTovarnaId(Integer id);
 }
