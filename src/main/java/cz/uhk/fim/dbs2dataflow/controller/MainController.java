@@ -49,7 +49,7 @@ public class MainController {
         } catch (DataNotFoundException e){
 
         }
-        return "tovarna";
+        return "hala";
     }
 
     @GetMapping(value = "/hala/{id}")

@@ -78,8 +78,9 @@
     </thead>
     <tbody>
     <tr th:each="e: ${tovarny}">
+
         <td>
-            <a href="hala.html">${e.nazev}</a>
+            <a href="tovarna.html">${e.nazev}</a>
         </td>
         <td th:text="${e.adresa.toString()}"></td>
         <td th:text="${e.pocetHal}"></td>

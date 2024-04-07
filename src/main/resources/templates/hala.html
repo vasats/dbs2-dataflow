@@ -15,6 +15,19 @@
             position: relative;
         }
 
+        h1 {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 2px solid black;
+        }
+
         #header {
             background-color: #f2f2f2;
             height: 50px;
@@ -28,51 +41,13 @@
             justify-content: space-between;
         }
 
-        #halButton {
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png') no-repeat center;
-            background-size: contain;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-        }
-
         #datum {
             font-size: 17px;
             position: absolute;
             top: 50%;
-            left: 230px;
+            left: 100px;
             transform: translateY(-50%);
         }
-
-        #halOptions {
-            position: absolute;
-            top: 60px;
-            left: 10px;
-            background-color: #ffffff;
-            border: 2px solid #000000;
-            border-radius: 10px;
-            padding: 20px;
-            display: none;
-            font-weight: bold;
-            font-size: 19px;
-        }
-
-
-        #halOptions ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        #halOptions li {
-            margin: 5px;
-            cursor: pointer;
-        }
-
-        #halOptions li:hover {
-            background-color: #f2f2f2;
-        }
-
 
         table {
             border-collapse: collapse;
@@ -80,7 +55,7 @@
             margin: 1cm;
             margin-top: 0.5px;
             position: absolute;
-            top: 250px;
+            top: 210px;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -102,25 +77,7 @@
         tr:nth-child(odd) {
             background-color: white;
         }
-
-        #halTitle {
-            text-align: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 2px solid black;
-            cursor: pointer;
-            display: block;
-        }
-
-
     </style>
-
 </head>
 <body>
 <div id="header">
@@ -128,19 +85,11 @@
     <form>
         <label for="datum"></label>
         <input type="date" id="datum" value="2024-11" style="font-size: 16px;">
+
     </form>
 </div>
-<div class="header-container">
-    <div id="halOptions">
-        <ul>
-            <li onclick="changeHall('HALA A')">Hala A</li>
-            <li onclick="changeHall('HALA B')">Hala B</li>
-            <li onclick="changeHall('HALA C')">Hala C</li>
-        </ul>
-    </div>
-    <h1 id="halTitle">HALA</h1>
-    <div th:text="${tovarna}" style="margin-right: 10px;"></div>
-</div>
+
+<h1>HALA</h1>
 
 <table id="tovarna">
     <thead>
@@ -149,34 +98,15 @@
         <th>Směna</th>
         <th>Zařízení</th>
         <th>Spotřeba</th>
+
+
     </tr>
     </thead>
-
     <tbody>
-    <tr th:each="e: ${tovarny}">
+
     </tbody>
 </table>
 
-<script>
-    function changeHall(hall) {
-        document.getElementById("halOptions").style.display = "none";
-        document.getElementById("halTitle").innerText = hall;
-        document.getElementById("datum").value = '';
-        document.getElementById("halButton").style.transform = 'rotate(0deg)';
-    }
-    function toggleHallOptions() {
-        var halOptions = document.getElementById("halOptions");
-        var halButton = document.getElementById("halButton");
 
-        if (halOptions.style.display === 'none') {
-            halOptions.style.display = 'block';
-            halButton.style.transform = 'rotate(90deg)';
-        } else {
-            halOptions.style.display = 'none';
-            halButton.style.transform = 'rotate(0deg)';
-        }
-    }
-
-</script>
 </body>
 </html>
