@@ -77,9 +77,9 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="e: ${tovarny}">
+  <tr th:each="e: ${haly}">
     <td>
-      <a href="hala.html">${e.nazev}</a>
+      <a th:href="@{'/hala/'+${e.id}}" th:text="${e.nazev}"></a>
     </td>
 
   </tr>
