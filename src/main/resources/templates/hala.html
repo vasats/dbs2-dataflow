@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HALA 1</title>
+    <title>SPOTŘEBA ENERGIÍ</title>
     <style>
         body {
             background-color: white;
@@ -15,36 +15,74 @@
             position: relative;
         }
 
-        .header-container {
+        #header {
+            background-color: #f2f2f2;
+            height: 50px;
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0 5px;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        h1 {
-            text-align: left;
-            background-color: white;
-            padding: 20px;
+        #halButton {
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png') no-repeat center;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        #datum {
+            font-size: 17px;
+            position: absolute;
+            top: 50%;
+            left: 230px;
+            transform: translateY(-50%);
+        }
+
+        #halOptions {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            background-color: #ffffff;
+            border: 2px solid #000000;
             border-radius: 10px;
-            box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
-            margin: 0;
-            border: 2px solid black;
+            padding: 20px;
+            display: none;
+            font-weight: bold;
+            font-size: 19px;
         }
 
-        #filtr {
-            margin-left: 20px;
+
+        #halOptions ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
         }
+
+        #halOptions li {
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        #halOptions li:hover {
+            background-color: #f2f2f2;
+        }
+
 
         table {
             border-collapse: collapse;
-            width: 30%;
+            width: 60%;
             margin: 1cm;
-            margin-top: 0.2px;
+            margin-top: 0.5px;
             position: absolute;
-            top: 150px;
-            left: 10px;
+            top: 250px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         th, td {
@@ -65,13 +103,43 @@
             background-color: white;
         }
 
+        #halTitle {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 2px solid black;
+            cursor: pointer;
+            display: block;
+        }
+
+
     </style>
 
 </head>
 <body>
+<div id="header">
+    <div id="halButton" onclick="toggleHallOptions()"></div>
+    <form>
+        <label for="datum"></label>
+        <input type="date" id="datum" value="2024-11" style="font-size: 16px;">
+    </form>
+</div>
 <div class="header-container">
-    <h1>HALA 1</h1>
-    <button id="filtr">Filtrovat podle data</button>
+    <div id="halOptions">
+        <ul>
+            <li onclick="changeHall('HALA A')">Hala A</li>
+            <li onclick="changeHall('HALA B')">Hala B</li>
+            <li onclick="changeHall('HALA C')">Hala C</li>
+        </ul>
+    </div>
+    <h1 id="halTitle">HALA</h1>
+    <div th:text="${tovarna}" style="margin-right: 10px;"></div>
 </div>
 
 <table id="tovarna">
@@ -79,7 +147,7 @@
     <tr>
         <th>Datum</th>
         <th>Směna</th>
-        <th>Zařízeni</th>
+        <th>Zařízení</th>
         <th>Spotřeba</th>
     </tr>
     </thead>
@@ -89,5 +157,26 @@
     </tbody>
 </table>
 
+<script>
+    function changeHall(hall) {
+        document.getElementById("halOptions").style.display = "none";
+        document.getElementById("halTitle").innerText = hall;
+        document.getElementById("datum").value = '';
+        document.getElementById("halButton").style.transform = 'rotate(0deg)';
+    }
+    function toggleHallOptions() {
+        var halOptions = document.getElementById("halOptions");
+        var halButton = document.getElementById("halButton");
+
+        if (halOptions.style.display === 'none') {
+            halOptions.style.display = 'block';
+            halButton.style.transform = 'rotate(90deg)';
+        } else {
+            halOptions.style.display = 'none';
+            halButton.style.transform = 'rotate(0deg)';
+        }
+    }
+
+</script>
 </body>
 </html>
