@@ -16,6 +16,7 @@ public class Tovarna {
     private String foto;
     private String nazev;
     //todo change datatype
+    @Column(name = "Cenazakwh")
     private float cenaZaKwh;
 
     public Integer getId() {

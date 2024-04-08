@@ -13,7 +13,7 @@ public class TovarnaInfo extends Tovarna{
     public TovarnaInfo(Tovarna tovarna, int pocetHal){
         super();
         setAdresa(tovarna.getAdresa());
-        setCenazakwh(tovarna.getCenazakwh());
+        setCenaZaKwh(tovarna.getCenaZaKwh());
         setFoto(tovarna.getFoto());
         setId(tovarna.getId());
         setNazev(tovarna.getNazev());
