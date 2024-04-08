@@ -16,7 +16,7 @@ public class Tovarna {
     private String foto;
     private String nazev;
     //todo change datatype
-    private float cenazakwh;
+    private float cenaZaKwh;
 
     public Integer getId() {
         return id;
@@ -50,11 +50,11 @@ public class Tovarna {
         this.nazev = nazev;
     }
 
-    public float getCenazakwh() {
-        return cenazakwh;
+    public float getCenaZaKwh() {
+        return cenaZaKwh;
     }
 
-    public void setCenazakwh(float cenazakwh) {
-        this.cenazakwh = cenazakwh;
+    public void setCenaZaKwh(float cenaZaKwh) {
+        this.cenaZaKwh = cenaZaKwh;
     }
 }
