@@ -209,11 +209,11 @@ GO*/
 CREATE PROCEDURE updateSmenaInclusion @ZamestnanecIDtoCheck int, @SmenaIdToCheck int, @HalaIdToCheck int
 AS
     if (@ZamestnanecIDtoCheck not in (SELECT T.ZamestnanecID
-        from Seznamzamestnancusmeny T
-        where T.HalaID=@HalaIdToCheck and T.SmenaID=@SmenaIdToCheck))
+                                      from Seznamzamestnancusmeny T
+                                      where T.HalaID=@HalaIdToCheck and T.SmenaID=@SmenaIdToCheck))
 
         Insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
-         values (@HalaIdToCheck, @ZamestnanecIDtoCheck, @SmenaIdToCheck)
+        values (@HalaIdToCheck, @ZamestnanecIDtoCheck, @SmenaIdToCheck)
 go
 
 CREATE TRIGGER newUse ON Zaznamopouziti
@@ -227,24 +227,54 @@ CREATE TRIGGER newUse ON Zaznamopouziti
     Declare @SmenaID as int;
     set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,inserted.Datumcas,CONVERT(smalldatetime,S.Datumod))  and );
 
-    updateSmenaInclusion ZamestnanecID, @SmenaID, @HalaID
+            updateSmenaInclusion ZamestnanecID, @SmenaID, @HalaID
 
     insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
     values(inserted.Datumcas,inserted.ZamestnanecID,inserted.ZarizeniID)
     commit transaction;
-    go;
+go;
 
+CREATE VIEW spotrebaInfo
+AS SELECT Zarizeni.Oznaceni,
+          Zarizeni.Nazev,
+          Zaznamospotrebe.Spotreba,
+          Hala.HalaID,
+          DATEPART(DAYOFYEAR,Zaznamospotrebe.Datumcas)AS denVRoce,
+          DATEPART(HOUR,Zaznamospotrebe.Datumcas)AS hodina,
+          Zaznamopouziti.ZamestnanecID
+   FROM Zarizeni INNER JOIN Zaznamospotrebe
+                            ON Zarizeni.ZarizeniID=Zaznamospotrebe.ZarizeniID
+                 INNER JOIN Hala
+                            ON Zarizeni.HalaID=Hala.HalaID
+                 INNER JOIN Zaznamopouziti
+                            ON Zarizeni.ZarizeniID=Zaznamopouziti.ZarizeniID
+GO
+/*Napsat funkci co bude scitat spotreby jednotlivych tovaren, hal, zarizeni a zaznamu o spotrebe a pronasobi to cenou/kWh a vrati celkovou cenu spotreby.*/
+SELECT SUM(spotreba) AS celkova_spotreba
+FROM ZaznamOSpotrebe;
 
-
-
-
-
+CREATE FUNCTION CelkovaCenaSpotreby()
+    RETURNS DECIMAL(18,2)  -- Návratový datový typ je DECIMAL s přesností 18 číslic a 2 desetinnými místy
+AS
+BEGIN
+    DECLARE @CelkovaCena DECIMAL(18,2);  -- Deklarace proměnné pro uchování celkové ceny
+    -- Výpočet celkové ceny spotřeby pomocí součtu spotřeby v jednotlivých záznamech o spotřebě a ceny za kWh
+    --přepsat na zaznam o spotrebe
+    SELECT @CelkovaCena = SUM(zaznamOSpotrebe.Spotreba * Tovarna.CenaZaKWh)
+    FROM spotrebaInfo
+             INNER JOIN Tovarna ON spotrebaInfo.TovarnaID = Tovarna.TovarnaID
+        AND spotrebaInfo.HalaID = Tovarna.HalaID
+        AND spotrebaInfo.ZarizeniID = Tovarna.ZarizeniID
+        AND spotrebaInfo.ZaznamID = Tovarna.ZaznamID;
+    -- Návrat celkové ceny spotřeby
+    RETURN @CelkovaCena;
+END;
 
 insert into Webovyucet (Heslohash, Jmeno, Typuctu)
 values ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'testJmeno1', 'testTyp1')
 
 insert into Adresa (Cislopopisne, Psc, Ulice)
-    values (215,55102,N'Hradecká')
+values (215,55102,N'Hradecká')
 
 go
 insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID)
