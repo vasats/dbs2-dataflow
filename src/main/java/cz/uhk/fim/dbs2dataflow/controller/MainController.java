@@ -2,10 +2,7 @@ package cz.uhk.fim.dbs2dataflow.controller;
 
 
 import cz.uhk.fim.dbs2dataflow.exception.DataNotFoundException;
-import cz.uhk.fim.dbs2dataflow.model.SeznamZamestnancuSmeny;
-import cz.uhk.fim.dbs2dataflow.model.Tovarna;
-import cz.uhk.fim.dbs2dataflow.model.TovarnaInfo;
-import cz.uhk.fim.dbs2dataflow.model.WebovyUcet;
+import cz.uhk.fim.dbs2dataflow.model.*;
 import cz.uhk.fim.dbs2dataflow.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +26,10 @@ public class MainController {
 
     @Autowired
     HalaService halaService;
+
+    @Autowired
+    SpotrebaInfoViewService spotrebaInfoViewService;
+
     @GetMapping(value = "/main")
     public String showMainPage(Model model){
         List<Tovarna> tovarny = tovarnaService.getAll();
@@ -55,7 +56,7 @@ public class MainController {
     @GetMapping(value = "/hala/{id}")
     private String showHalaInfo(@PathVariable("id") Integer id, Model model){
         try {
-            model.addAttribute("hala",tovarnaService.getTovarnaById(id));
+            model.addAttribute("zarizeni",spotrebaInfoViewService.getByHalaId(id));
         } catch (DataNotFoundException e){
 
         }
