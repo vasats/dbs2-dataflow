@@ -9,13 +9,11 @@ public class Tovarna {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TovarnaID")
     private Integer id;
-    
     @JoinColumn(name = "AdresaID")
     @OneToOne
     private Adresa adresa;
     private String foto;
     private String nazev;
-    //todo change datatype
     @Column(name = "Cenazakwh")
     private float cenaZaKwh;
 

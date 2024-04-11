@@ -3,26 +3,25 @@ package cz.uhk.fim.dbs2dataflow.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity
 @Immutable
+@Table(name = "spotrebainfo")
 public class SpotrebaInfo {
 
-    @JoinColumn
+    @JoinColumn(name = "HalaID")
     @ManyToOne
     private Hala hala;
     private float spotreba;
-    @JoinColumn
+    @JoinColumn(name = "ZamestnanecID")
     @ManyToOne
     private Zamestnanec zamestnanec;
     private String oznaceni;
     private String nazev;
-    private LocalDate datum;
-    //todo make embed instead
     @Id
-    private LocalTime time;
+    @Column(name = "datumcas")
+    private LocalDateTime time;
 
     public Hala getHala() {
         return hala;
@@ -64,19 +63,11 @@ public class SpotrebaInfo {
         this.nazev = nazev;
     }
 
-    public LocalDate getDatum() {
-        return datum;
-    }
-
-    public void setDatum(LocalDate datum) {
-        this.datum = datum;
-    }
-
-    public LocalTime getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalTime time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 }
