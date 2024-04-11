@@ -14,13 +14,14 @@ public class Zamestnanec {
     @OneToOne
     private Adresa adresa;
     
-    @JoinColumn(name = "WebovyUcetID")
+    @JoinColumn(name = "WebovyucetID")
     @OneToOne
     private WebovyUcet webovyUcet;
 
     private String email;
     private String jmeno;
     private String prijmeni;
+    @Column(name = "Rodnecislo")
     private String rodneCislo;
     private String telefon;
 
