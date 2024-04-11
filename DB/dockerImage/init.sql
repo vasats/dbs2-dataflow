@@ -239,8 +239,7 @@ AS SELECT Zarizeni.Oznaceni,
           Zarizeni.Nazev,
           Zaznamospotrebe.Spotreba,
           Hala.HalaID,
-          DATEPART(DAYOFYEAR,Zaznamospotrebe.Datumcas)AS denVRoce,
-          DATEPART(HOUR,Zaznamospotrebe.Datumcas)AS hodina,
+          Zaznamospotrebe.Datumcas,
           Zaznamopouziti.ZamestnanecID
    FROM Zarizeni INNER JOIN Zaznamospotrebe
                             ON Zarizeni.ZarizeniID=Zaznamospotrebe.ZarizeniID
