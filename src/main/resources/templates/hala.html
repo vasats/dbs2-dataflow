@@ -81,7 +81,7 @@
 </head>
 <body>
 <div id="header">
-    <div id="halButton" onclick="toggleHallOptions()"></div>
+    <div id="halButton"></div>
     <form>
         <label for="datum"></label>
         <input type="date" id="datum" value="2024-11" style="font-size: 16px;">
@@ -94,12 +94,18 @@
 <table id="tovarna">
     <thead>
     <tr>
-        <th>Datum</th>
-        <th>Směna</th>
-        <th>Zařízení</th>
+        <th>Označení zařízení</th>
+        <th>Název zařízení</th>
         <th>Spotřeba</th>
-
-
+        <th>Čas</th>
+        <th>Zaměstnanec</th>
+    </tr>
+    <tr th:each="e: ${zarizeni}">
+        <td th:text="${e.oznaceni}"></td>
+        <td th:text="${e.nazev}"></td>
+        <td th:text="${e.spotreba}"></td>
+        <td th:text="${e.time}"></td>
+        <td><div th:text="${e.zamestnanec.jmeno}"></div> <div th:text="${e.zamestnanec.prijmeni}"></div></td>
     </tr>
     </thead>
     <tbody>
