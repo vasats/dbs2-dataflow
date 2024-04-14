@@ -13,9 +13,7 @@
       height: 100vh;
       margin: 0;
       position: relative;
-
     }
-
     h1 {
       text-align: center;
       background-color: white;
@@ -28,8 +26,6 @@
       transform: translateX(-50%);
       border: 2px solid black;
     }
-
-
     table {
       border-collapse: collapse;
       width: 60%;
@@ -40,38 +36,34 @@
       left: 50%;
       transform: translateX(-50%);
     }
-
     th, td {
       border: 2px solid #dddddd;
       text-align: left;
       padding: 12px;
-
     }
-
     th {
       background-color: #EEEEEE;
     }
-
     tr:nth-child(even) {
       background-color: white;
     }
-
     tr:nth-child(odd) {
       background-color: white;
     }
-
-
+    img {
+      position: absolute;
+      top: 40px;
+      left: 80px;
+    }
   </style>
 
 </head>
 <body>
-<h1>TOVÁRNA</h1>
-
-
-<table id="tovarna">
+    <h1>TOVÁRNA</h1>
+  <img src="tovarna1.jpg" alt="tovarna" width="20%" height="20%">
+  <table id="tovarna">
   <thead>
   <tr>
-
     <th>NÁZEV HALY</th>
     <th>POČET ZAŘÍZENÍ</th>
   </tr>
@@ -82,7 +74,6 @@
       <a th:href="@{'/hala/'+${e.halaID}}" th:text="${e.oznaceni}"></a>
     </td>
     <td th:text="${e.oznaceni}"></td>
-
   </tr>
   </tbody>
 </table>

@@ -225,7 +225,7 @@ CREATE TRIGGER newUse ON Zaznamopouziti
     Declare @DateTimeFrom as smalldatetime;
     set @DateTimefrom = CONVERT(inserted.)
     Declare @SmenaID as int;
-    set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,inserted.Datumcas,CONVERT(smalldatetime,S.Datumod))  and );
+    set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,inserted.Datumcas,CONVERT(smalldatetime,S.Datumod))  and);
 
             updateSmenaInclusion ZamestnanecID, @SmenaID, @HalaID
 
