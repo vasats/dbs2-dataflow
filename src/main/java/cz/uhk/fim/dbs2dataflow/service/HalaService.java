@@ -29,4 +29,8 @@ public class HalaService {
         List<Hala> halas = repository.findAllByTovarnaId(id);
         return halas;
     }
+    public void addHala(Hala hala, Tovarna tovarna){
+        hala.setTovarna(tovarna);
+        repository.save(hala);
+    }
 }

@@ -79,6 +79,12 @@
   </tbody>
 </table>
 
+<form th:action="@{/tovarna/__${tovarna.id}__}" th:object="${newHala}" method="post">
+  <label>Oznaceni: </label>
+  <input type="text" th:field="*{oznaceni}" placeholder="označení">
+  <input type="submit" th:value="Add">
+</form>
+
 
 
 </body>

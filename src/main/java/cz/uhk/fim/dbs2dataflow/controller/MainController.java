@@ -45,6 +45,7 @@ public class MainController {
 
     @GetMapping(value = "/tovarna/{id}")
     private String showFactoryInfo(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("newHala", new Hala());
         try {
             model.addAttribute("haly",halaService.getByTovarnaId(id));
             model.addAttribute("tovarna", tovarnaService.getTovarnaById(id));
@@ -53,6 +54,12 @@ public class MainController {
 
         }
         return "tovarna";
+    }
+    @PostMapping(value = "/tovarna/{id}")
+    private RedirectView addNewHala(@ModelAttribute Hala newHala, @PathVariable Integer id){
+        Tovarna tovarna = tovarnaService.getTovarnaById(id);
+        halaService.addHala(newHala, tovarna);
+        return new RedirectView("/tovarna/"+id);
     }
 
     @GetMapping(value = "/hala/{id}")
