@@ -60,7 +60,8 @@
 </head>
 <body>
     <h1>TOVÁRNA</h1>
-  <img src="tovarna1.jpg" alt="tovarna" width="20%" height="20%">
+  <img th:src="@{${tovarna.foto}}" alt="tovarna" width="20%" height="20%">
+    <p th:text="Celková spotřeba továrny ${spotreba}"></p>
   <table id="tovarna">
   <thead>
   <tr>

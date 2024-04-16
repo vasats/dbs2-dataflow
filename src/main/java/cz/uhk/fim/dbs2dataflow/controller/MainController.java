@@ -47,6 +47,8 @@ public class MainController {
     private String showFactoryInfo(@PathVariable("id") Integer id, Model model){
         try {
             model.addAttribute("haly",halaService.getByTovarnaId(id));
+            model.addAttribute("tovarna", tovarnaService.getTovarnaById(id));
+            model.addAttribute("spotreba", tovarnaService.getSpotrebabyId(id));
         } catch (DataNotFoundException e){
 
         }

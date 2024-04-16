@@ -28,4 +28,7 @@ public class TovarnaService {
         }
         return tovarnaList;
     }
+    public float getSpotrebabyId(Integer id){
+        return repository.celkovaSpotreba(id);
+    }
 }
