@@ -48,7 +48,7 @@ public class MainController {
         try {
             model.addAttribute("haly",halaService.getByTovarnaId(id));
             model.addAttribute("tovarna", tovarnaService.getTovarnaById(id));
-            model.addAttribute("spotreba", tovarnaService.getSpotrebabyId(id));
+            model.addAttribute("spotreba", tovarnaService.getSpotrebabyId(id) + " ");
         } catch (DataNotFoundException e){
 
         }

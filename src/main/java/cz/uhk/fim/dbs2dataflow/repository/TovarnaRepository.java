@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TovarnaRepository extends CrudRepository<Tovarna,Integer> {
-    @Query(nativeQuery = true, value = "CelkovaCenaSpotreby(:id)")
+    @Query(nativeQuery = true, value = "use energie select dbo.CelkovaCenaSpotreby(Tovarna.TovarnaID) from Tovarna where TovarnaID=:id ")
     float celkovaSpotreba(@Param("id") int id);
 
 }

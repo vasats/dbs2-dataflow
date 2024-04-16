@@ -253,10 +253,10 @@ SELECT SUM(spotreba) AS celkova_spotreba
 FROM ZaznamOSpotrebe;
  go
 CREATE FUNCTION CelkovaCenaSpotreby(@id int)
-    RETURNS DECIMAL(18,2)  -- Návratový datový typ je DECIMAL s přesností 18 číslic a 2 desetinnými místy
+    RETURNS float  -- Návratový datový typ je DECIMAL s přesností 18 číslic a 2 desetinnými místy
 AS
 BEGIN
-    DECLARE @CelkovaCena DECIMAL(18,2);  -- Deklarace proměnné pro uchování celkové ceny
+    DECLARE @CelkovaCena float;  -- Deklarace proměnné pro uchování celkové ceny
     -- Výpočet celkové ceny spotřeby pomocí součtu spotřeby v jednotlivých záznamech o spotřebě a ceny za kWh
     --přepsat na zaznam o spotrebe
     SELECT @CelkovaCena = SUM(zaznamOSpotrebe.Spotreba * T.CenaZaKWh)
