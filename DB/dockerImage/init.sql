@@ -267,6 +267,9 @@ BEGIN
              INNER JOIN dbo.Hala H on Z.HalaID = H.HalaID
              INNER JOIN dbo.Tovarna T on T.TovarnaID = H.TovarnaID
     where T.TovarnaID = @id
+
+    if @CelkovaCena IS NULL
+        return 0
     -- Návrat celkové ceny spotřeby
     RETURN @CelkovaCena;
 END;

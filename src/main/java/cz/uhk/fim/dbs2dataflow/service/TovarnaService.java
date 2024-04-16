@@ -29,6 +29,10 @@ public class TovarnaService {
         return tovarnaList;
     }
     public float getSpotrebabyId(Integer id){
-        return repository.celkovaSpotreba(id);
+        Float spotreba = repository.celkovaSpotreba(id);
+        if(spotreba == null){
+            return 0;
+        }
+        return spotreba;
     }
 }
