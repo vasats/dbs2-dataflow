@@ -252,19 +252,19 @@ GO
 SELECT SUM(spotreba) AS celkova_spotreba
 FROM ZaznamOSpotrebe;
  go
-CREATE FUNCTION CelkovaCenaSpotreby()
+CREATE FUNCTION CelkovaCenaSpotreby(@id int)
     RETURNS DECIMAL(18,2)  -- Návratový datový typ je DECIMAL s přesností 18 číslic a 2 desetinnými místy
 AS
 BEGIN
     DECLARE @CelkovaCena DECIMAL(18,2);  -- Deklarace proměnné pro uchování celkové ceny
     -- Výpočet celkové ceny spotřeby pomocí součtu spotřeby v jednotlivých záznamech o spotřebě a ceny za kWh
     --přepsat na zaznam o spotrebe
-    SELECT @CelkovaCena = SUM(zaznamOSpotrebe.Spotreba * Tovarna.CenaZaKWh)
-    FROM spotrebaInfo
-             INNER JOIN Tovarna ON spotrebaInfo.TovarnaID = Tovarna.TovarnaID
-        AND spotrebaInfo.HalaID = Tovarna.HalaID
-        AND spotrebaInfo.ZarizeniID = Tovarna.ZarizeniID
-        AND spotrebaInfo.ZaznamID = Tovarna.ZaznamID;
+    SELECT @CelkovaCena = SUM(zaznamOSpotrebe.Spotreba * T.CenaZaKWh)
+    FROM Zaznamospotrebe
+             INNER JOIN Zarizeni Z on Zaznamospotrebe.ZarizeniID = Z.ZarizeniID
+             INNER JOIN dbo.Hala H on Z.HalaID = H.HalaID
+             INNER JOIN dbo.Tovarna T on T.TovarnaID = H.TovarnaID
+    where T.TovarnaID = @id
     -- Návrat celkové ceny spotřeby
     RETURN @CelkovaCena;
 END;
