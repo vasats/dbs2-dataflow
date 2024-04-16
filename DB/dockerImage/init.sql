@@ -202,9 +202,11 @@ ALTER TABLE [Zaznamospotrebe] ADD CONSTRAINT [FK_Zaznamospotrebe_Zarizeni]
     FOREIGN KEY ([ZarizeniID]) REFERENCES [Zarizeni] ([ZarizeniID]) ON DELETE No Action ON UPDATE No Action
 GO
 
-/*CREATE LOGIN WebServer
+CREATE LOGIN WebServer
     WITH PASSWORD = 'Nj4658g465huisca';
-GO*/
+create user Webserver from Login WebServer
+alter role db_owner add member Webserver
+go
 
 CREATE PROCEDURE updateSmenaInclusion @ZamestnanecIDtoCheck int, @SmenaIdToCheck int, @HalaIdToCheck int
 AS
