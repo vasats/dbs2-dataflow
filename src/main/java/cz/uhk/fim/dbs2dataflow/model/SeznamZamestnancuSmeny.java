@@ -3,6 +3,7 @@ package cz.uhk.fim.dbs2dataflow.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Seznamzamestnancusmeny")
 public class SeznamZamestnancuSmeny {
     
     @EmbeddedId

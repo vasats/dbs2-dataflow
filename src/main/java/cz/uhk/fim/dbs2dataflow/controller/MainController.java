@@ -70,6 +70,7 @@ public class MainController {
     @GetMapping(value = "/hala/{id}")
     private String showHalaInfo(@PathVariable("id") Integer id, Model model){
         try {
+            model.addAttribute("hala", halaService.getByID(id));
             model.addAttribute("zarizeni",spotrebaInfoViewService.getByHalaId(id));
         } catch (DataNotFoundException e){
 
