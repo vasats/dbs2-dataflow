@@ -228,13 +228,11 @@ Declare @DateTimeFrom as smalldatetime;
 Declare @SmenaID as int;
     /*set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,@Datumcas,CONVERT(smalldatetime,S.Datumod))  and);*/
     set @SmenaID = (
-        select S.SmenaID from Smena S where S.Casdo+S.Casod like case when ;
-
+        select S.SmenaID from Smena S where S.Datumod like case when S.Casdo+S.Casod > '24:00' then  );
 
     if @SmenaID is null
-        rollback transaction
-
-            updateSmenaInclusion ZamestnanecID, @SmenaID, @HalaID
+        rollback transaction;
+    else updateSmenaInclusion @ZamestnanecID, @SmenaID, @HalaID
 insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
 values(@Datumcas,@ZamestnanecID,@ZarizeniID)
     commit transaction;
@@ -262,6 +260,9 @@ AS SELECT Zarizeni.Oznaceni,
                             ON Zarizeni.ZarizeniID=Zaznamopouziti.ZarizeniID
                  INNER JOIN Hala
                             ON Zarizeni.HalaID=Hala.HalaID
+    where Zaznamospotrebe.Datumcas > (select max(Zaznamopouziti.Datumcas) from Zaznamopouziti
+                                                       WHERE Zaznamopouziti.Datumcas < Zaznamospotrebe.Datumcas and
+                                                             Zaznamopouziti.ZarizeniID = Zarizeni.ZarizeniID)
 
 GO
 /*Napsat funkci co bude scitat spotreby jednotlivych tovaren, hal, zarizeni a zaznamu o spotrebe a pronasobi to cenou/kWh a vrati celkovou cenu spotreby.*/
