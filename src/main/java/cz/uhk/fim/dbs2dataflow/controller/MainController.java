@@ -87,6 +87,16 @@ public class MainController {
         model.addAttribute("ucty", spotrebes);
         return "test";
     }
+    @GetMapping(value = "/hala/{id}/zarizeni")
+    private String showZarizeni(@PathVariable("id") int id,Model model){
+        Zarizeni newZarizeni = new Zarizeni();
+        newZarizeni.setHala(halaService.getByID(id));
+
+        model.addAttribute("newZarizeni", newZarizeni);
+        model.addAttribute("zarizeni");
+
+        return "zarizeni";
+    }
     @RequestMapping(value = "/")
     private String fallback(){
         return "redirect:/main";
