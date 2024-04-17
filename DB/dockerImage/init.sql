@@ -217,23 +217,36 @@ AS
         Insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
         values (@HalaIdToCheck, @ZamestnanecIDtoCheck, @SmenaIdToCheck)
 go
+CREATE PROCEDURE checkSmenaInclusion @Datumcas smalldatetime, @ZamestnanecID int, @ZarizeniID int
+AS
+    Begin TRANSACTION trans
+
+Declare @HalaID as int;
+    set @HalaID = (select Z.HalaID from Zarizeni Z where Z.ZarizeniID = @ZarizeniID);
+Declare @DateTimeFrom as smalldatetime;
+    set @DateTimefrom = CONVERT(inserted.)
+Declare @SmenaID as int;
+    /*set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,@Datumcas,CONVERT(smalldatetime,S.Datumod))  and);*/
+    set @SmenaID = (
+        select S.SmenaID from Smena S where S.Casdo+S.Casod like case when ;
+
+
+    if @SmenaID is null
+        rollback transaction
+
+            updateSmenaInclusion ZamestnanecID, @SmenaID, @HalaID
+insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
+values(@Datumcas,@ZamestnanecID,@ZarizeniID)
+    commit transaction;
+go
 
 CREATE TRIGGER newUse ON Zaznamopouziti
     instead of INSERT AS
-    Begin TRANSACTION;
+    declare @date as smalldatetime = inserted.Datumcas;
+    declare @zamestnanec as int = inserted.ZamestnanecID;
+    declare @zarizeni as int = inserted.ZarizeniID;
+    checkSmenaInclusion @Datumcas = @date, @ZamestnanecID = @zamestnanec, @ZarizeniID = @zarizeni
 
-    Declare @HalaID as int;
-    set @HalaID = (select Z.HalaID from Zarizeni Z where Z.ZarizeniID = inserted.ZarizeniID);
-    Declare @DateTimeFrom as smalldatetime;
-    set @DateTimefrom = CONVERT(inserted.)
-    Declare @SmenaID as int;
-    set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,inserted.Datumcas,CONVERT(smalldatetime,S.Datumod))  and);
-
-            updateSmenaInclusion ZamestnanecID, @SmenaID, @HalaID
-
-    insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
-    values(inserted.Datumcas,inserted.ZamestnanecID,inserted.ZarizeniID)
-    commit transaction;
 go;
 
 CREATE VIEW spotrebaInfo
