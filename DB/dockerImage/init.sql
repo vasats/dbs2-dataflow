@@ -243,12 +243,13 @@ AS SELECT Zarizeni.Oznaceni,
           Hala.HalaID,
           Zaznamospotrebe.Datumcas,
           Zaznamopouziti.ZamestnanecID
-   FROM Zarizeni INNER JOIN Zaznamospotrebe
+   FROM Zaznamospotrebe INNER JOIN Zarizeni
                             ON Zarizeni.ZarizeniID=Zaznamospotrebe.ZarizeniID
-                 INNER JOIN Hala
-                            ON Zarizeni.HalaID=Hala.HalaID
                  INNER JOIN Zaznamopouziti
                             ON Zarizeni.ZarizeniID=Zaznamopouziti.ZarizeniID
+                 INNER JOIN Hala
+                            ON Zarizeni.HalaID=Hala.HalaID
+
 GO
 /*Napsat funkci co bude scitat spotreby jednotlivych tovaren, hal, zarizeni a zaznamu o spotrebe a pronasobi to cenou/kWh a vrati celkovou cenu spotreby.*/
 SELECT SUM(spotreba) AS celkova_spotreba
