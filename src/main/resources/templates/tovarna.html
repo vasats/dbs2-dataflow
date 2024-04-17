@@ -59,9 +59,17 @@
 
 </head>
 <body>
+<div id="header">
+  <form th:action="@{/tovarna/__${tovarna.id}__}" th:object="${newHala}" method="post">
+    <label for="oznaceni">Oznaceni: </label>
+    <input type="text" id="oznaceni" th:field="*{oznaceni}" placeholder="označení">
+    <input type="submit" th:value="Přidat">
+  </form>
+</div>
     <h1>TOVÁRNA</h1>
   <img th:src="@{${tovarna.foto}}" alt="tovarna" width="20%" height="20%">
-    <p th:text="${spotreba}"></p>
+  <br>
+  <p id="spotreba" th:text="${'Celková spotřeba:' + spotreba + ' kwh'}"></p>
   <table id="tovarna">
   <thead>
   <tr>
@@ -78,14 +86,6 @@
   </tr>
   </tbody>
 </table>
-
-<form th:action="@{/tovarna/__${tovarna.id}__}" th:object="${newHala}" method="post">
-  <label>Oznaceni: </label>
-  <input type="text" th:field="*{oznaceni}" placeholder="označení">
-  <input type="submit" th:value="Add">
-</form>
-
-
 
 </body>
 </html>
