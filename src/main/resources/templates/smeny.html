@@ -80,34 +80,22 @@
     </style>
 </head>
 <body>
-<div id="header">
-    <div id="halButton"></div>
-    <form>
-        <label for="datum"></label>
-        <input type="date" id="datum" value="2024-11" style="font-size: 16px;">
 
-    </form>
-    <a th:text="${'Seznam zařízení haly'}" th:href="@{'/hala/' + ${hala.halaID} + '/zarizeni'}"></a>
-    <a th:text="${'Směny'}" th:href="@{'/hala/' + ${hala.halaID} + '/smeny'}"></a>
-</div>
-
-<h1>HALA</h1>
+<h1>SMĚNY</h1>
 
 <table id="tovarna">
     <thead>
     <tr>
-        <th>Označení zařízení</th>
-        <th>Název zařízení</th>
-        <th>Spotřeba</th>
-        <th>Čas</th>
-        <th>Zaměstnanec</th>
+        <th>Datum</th>
+        <th>Čas od</th>
+        <th>Čas do</th>
     </tr>
-    <tr th:each="e: ${zarizeni}">
-        <td th:text="${e.oznaceni}"></td>
-        <td th:text="${e.nazev}"></td>
-        <td th:text="${e.spotreba}"></td>
-        <td th:text="${e.time}"></td>
-        <td><div th:text="${e.zamestnanec.jmeno}"></div> <div th:text="${e.zamestnanec.prijmeni}"></div></td>
+
+    <tr th:each="e: ${smeny}">
+
+        <td> <a th:text="${e.datumOd}" th:href="@{'/smena/' + ${e.id} + '/' + ${hala.HalaID}}"></a></td>
+        <td th:text="${e.casOd}"></td>
+        <td th:text="${e.casDo}"></td>
     </tr>
     </thead>
     <tbody>

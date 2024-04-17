@@ -12,8 +12,11 @@ public class Smena {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SmenaID")
     private Integer id;
+    @Column(name = "casdo")
     private LocalTime casDo;
+    @Column(name = "casod")
     private LocalTime casOd;
+    @Column(name = "Datumod")
     private LocalDate datumOd;
 
     public LocalTime getCasDo() {

@@ -82,30 +82,26 @@
 <body>
 <div id="header">
     <div id="halButton"></div>
-    <form>
-        <label for="datum"></label>
-        <input type="date" id="datum" value="2024-11" style="font-size: 16px;">
-
+    <form th:action="@{/hala/__${hala.halaID}__/zarizeni}" th:object="${newZarizeni}" method="post">
+        <label for="oznaceni">Označení: </label>
+        <input type="text" id="oznaceni" th:field="*{oznaceni}" placeholder="označení">
+        <label for="Nazev">Název: </label>
+        <input type="text" id="Nazev" th:field="*{nazev}" placeholder="název">
+        <input type="submit" th:value="Přidat">
     </form>
 </div>
 
-<h1>HALA</h1>
+<h1>ZAŘÍZENÍ HALY</h1>
 
 <table id="tovarna">
     <thead>
     <tr>
         <th>Označení zařízení</th>
         <th>Název zařízení</th>
-        <th>Spotřeba</th>
-        <th>Čas</th>
-        <th>Zaměstnanec</th>
     </tr>
     <tr th:each="e: ${zarizeni}">
         <td th:text="${e.oznaceni}"></td>
         <td th:text="${e.nazev}"></td>
-        <td th:text="${e.spotreba}"></td>
-        <td th:text="${e.time}"></td>
-        <td><div th:text="${e.zamestnanec.jmeno}"></div> <div th:text="${e.zamestnanec.prijmeni}"></div></td>
     </tr>
     </thead>
     <tbody>

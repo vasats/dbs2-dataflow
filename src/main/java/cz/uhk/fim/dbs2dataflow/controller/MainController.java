@@ -30,6 +30,10 @@ public class MainController {
 
     @Autowired
     SpotrebaInfoViewService spotrebaInfoViewService;
+    @Autowired
+    ZarizeniService zarizeniService;
+    @Autowired
+    SmenaService smenaService;
 
     @GetMapping(value = "/main")
     public String showMainPage(Model model){
@@ -78,7 +82,7 @@ public class MainController {
 
         List<SeznamZamestnancuSmeny> seznam = seznamZamestnancuService.getAllbyHalaIDSmenaID(halaID, smenaID);
         model.addAttribute("seznamZamestnancuSmeny", seznam);
-        return "smena";
+        return "smenaDetail";
     }
 
     @GetMapping(value = "/test")
@@ -93,9 +97,25 @@ public class MainController {
         newZarizeni.setHala(halaService.getByID(id));
 
         model.addAttribute("newZarizeni", newZarizeni);
-        model.addAttribute("zarizeni");
+        model.addAttribute("hala",halaService.getByID(id));
+        model.addAttribute("zarizeni", zarizeniService.getByHalaID(id));
 
         return "zarizeni";
+    }
+    @PostMapping(value = "/hala/{id}/zarizeni")
+    private RedirectView addZarizeni(@PathVariable("id") int id, @ModelAttribute Zarizeni newZarizeni){
+        newZarizeni.setHala(halaService.getByID(id));
+        newZarizeni.setId(null);
+        zarizeniService.addZarizeni(newZarizeni);
+        return new RedirectView("/hala/"+id+"/zarizeni");
+    }
+    @GetMapping(value = "/hala/{id}/smeny")
+    private String showSmeny(@PathVariable("id") int id, Model model){
+        model.addAttribute("smeny", smenaService.getAllByHalaID(id));
+        model.addAttribute("hala", halaService.getByID(id));
+
+
+        return "smeny";
     }
     @RequestMapping(value = "/")
     private String fallback(){

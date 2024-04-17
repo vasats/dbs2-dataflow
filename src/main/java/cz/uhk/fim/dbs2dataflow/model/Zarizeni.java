@@ -3,12 +3,11 @@ package cz.uhk.fim.dbs2dataflow.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table
 public class Zarizeni {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ZarizeniID")
-    private Integer id;
+    private Long id;
     
     @JoinColumn(name = "HalaID")
     @ManyToOne
@@ -16,11 +15,11 @@ public class Zarizeni {
     private String oznaceni;
     private String nazev;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
