@@ -572,11 +572,11 @@ insert into Zamestnanec (Email, Jmeno, Prijmeni, Rodnecislo, Telefon, AdresaID) 
 insert into Zamestnanec (Email, Jmeno, Prijmeni, Rodnecislo, Telefon, AdresaID) values ('gclurow2h@virginia.edu', 'Maïlis', 'Clurow', 8583229533, '105 040 232', 100);
 go
 
-insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$7.05', '/I=', 'Panda2',101);
-insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$9.33', '','iadfs', 102);
-insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$9.04', 'Bo6AAAASUCYII=','Har', 103);
-insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$3.47', '0Gg0=','Pod', 104);
-insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$3.73', 'C','Ollo', 105);
+insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$7.05', 'pexels-pixabay-247763.jpg', 'Panda',101);
+insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$9.33', 'pexels-pixabay-220793.jpg','Panda 2', 102);
+insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$9.04', 'pexels-pixabay-269077.jpg','Har', 103);
+insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$3.47', 'pexels-hikaique-65438.jpg','Pod', 104);
+insert into Tovarna (Cenazakwh, Foto, Nazev, AdresaID) values ('$3.73', 'pexels-scottwebb-532568.jpg','Ollo', 105);
 go
 insert into Hala (Oznaceni, TovarnaID) values ('EMX', '4');
 insert into Hala (Oznaceni, TovarnaID) values ('WAY', '3');
