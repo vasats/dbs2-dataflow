@@ -22,6 +22,7 @@ public class MainController {
 
     @Autowired
     TovarnaService tovarnaService;
+
     @Autowired
     SeznamZamestnancuService seznamZamestnancuService;
 
@@ -30,8 +31,10 @@ public class MainController {
 
     @Autowired
     SpotrebaInfoViewService spotrebaInfoViewService;
+
     @Autowired
     ZarizeniService zarizeniService;
+
     @Autowired
     SmenaService smenaService;
 
@@ -52,7 +55,8 @@ public class MainController {
     private String showFactoryInfo(@PathVariable("id") Integer id, Model model){
         model.addAttribute("newHala", new Hala());
         try {
-            model.addAttribute("haly",halaService.getByTovarnaId(id));
+            model.addAttribute("haly",halaService.getByTovarnaId(id).stream()
+                    .map((e)-> new HalaInfo(zarizeniService.getByHalaID(e.getHalaID()).size(),e)).toList());
             model.addAttribute("tovarna", tovarnaService.getTovarnaById(id));
             model.addAttribute("spotreba", tovarnaService.getSpotrebabyId(id) + " ");
         } catch (DataNotFoundException e){
