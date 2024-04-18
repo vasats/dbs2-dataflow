@@ -217,33 +217,39 @@ AS
         Insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
         values (@HalaIdToCheck, @ZamestnanecIDtoCheck, @SmenaIdToCheck)
 go
-CREATE PROCEDURE checkSmenaInclusion @Datumcas smalldatetime, @ZamestnanecID int, @ZarizeniID int
+CREATE PROCEDURE checkSmenaInclusion @RowsToCheck ZaznamOPouziti READONLY
 AS
-    Begin TRANSACTION trans
+    Begin TRANSACTION
 
 Declare @HalaID as int;
     set @HalaID = (select Z.HalaID from Zarizeni Z where Z.ZarizeniID = @ZarizeniID);
 Declare @DateTimeFrom as smalldatetime;
-    set @DateTimefrom = CONVERT(inserted.)
+    --set @DateTimefrom = CONVERT(inserted.)
 Declare @SmenaID as int;
     /*set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,@Datumcas,CONVERT(smalldatetime,S.Datumod))  and);*/
-    set @SmenaID = (
-        select S.SmenaID from Smena S where S.Datumod like case when S.Casdo+S.Casod > '24:00' then  );
+    set @SmenaID = 1;
+        /*select S.SmenaID from Smena S where S.Datumod like case when S.Casdo+S.Casod > '24:00' then  );*/
 
     if @SmenaID is null
         rollback transaction;
-    else updateSmenaInclusion @ZamestnanecID, @SmenaID, @HalaID
-insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
-values(@Datumcas,@ZamestnanecID,@ZarizeniID)
-    commit transaction;
+begin try;
+    execute updateSmenaInclusion @ZamestnanecID, @SmenaID, @HalaID
+    insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
+    values(@Datumcas,@ZamestnanecID,@ZarizeniID)
+    commit transaction
+end try
+begin catch
+    rollback transaction
+
+end catch
 go
 
 CREATE TRIGGER newUse ON Zaznamopouziti
     instead of INSERT AS
-    declare @date as smalldatetime = inserted.Datumcas;
-    declare @zamestnanec as int = inserted.ZamestnanecID;
-    declare @zarizeni as int = inserted.ZarizeniID;
-    checkSmenaInclusion @Datumcas = @date, @ZamestnanecID = @zamestnanec, @ZarizeniID = @zarizeni
+    declare @date as smalldatetime = (select Datumcas from inserted);
+    declare @zamestnanec as int = (select ZamestnanecID from inserted);
+    declare @zarizeni as int = (select ZarizeniID from inserted);
+    execute checkSmenaInclusion @Datumcas = @date, @ZamestnanecID = @zamestnanec, @ZarizeniID = @zarizeni
 
 go;
 
