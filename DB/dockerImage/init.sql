@@ -247,22 +247,23 @@ CREATE TRIGGER newUse ON Zaznamopouziti
 
 go;
 
-CREATE VIEW spotrebaInfo
-AS SELECT Zarizeni.Oznaceni,
-          Zarizeni.Nazev,
-          Zaznamospotrebe.Spotreba,
+create VIEW spotrebaInfo
+AS SELECT Zar.Oznaceni,
+          Zar.Nazev,
+          Spot.Spotreba,
           Hala.HalaID,
-          Zaznamospotrebe.Datumcas,
-          Zaznamopouziti.ZamestnanecID
-   FROM Zaznamospotrebe INNER JOIN Zarizeni
-                            ON Zarizeni.ZarizeniID=Zaznamospotrebe.ZarizeniID
-                 INNER JOIN Zaznamopouziti
-                            ON Zarizeni.ZarizeniID=Zaznamopouziti.ZarizeniID
-                 INNER JOIN Hala
-                            ON Zarizeni.HalaID=Hala.HalaID
-    where Zaznamospotrebe.Datumcas > (select max(Zaznamopouziti.Datumcas) from Zaznamopouziti
-                                                       WHERE Zaznamopouziti.Datumcas < Zaznamospotrebe.Datumcas and
-                                                             Zaznamopouziti.ZarizeniID = Zarizeni.ZarizeniID)
+          Spot.Datumcas,
+          Pouz.ZamestnanecID
+   FROM Zaznamospotrebe Spot INNER JOIN Zarizeni Zar
+                                    ON Zar.ZarizeniID=Spot.ZarizeniID
+                             INNER JOIN Hala
+                                    ON Zar.HalaID=Hala.HalaID
+                            left outer JOIN Zaznamopouziti Pouz
+                                    ON Zar.ZarizeniID=Pouz.ZarizeniID
+
+    where Pouz.ZamestnanecID is null or Pouz.Datumcas = (select max(Zaznamopouziti.Datumcas) from Zaznamopouziti
+                                                       WHERE Zaznamopouziti.Datumcas < Spot.Datumcas and
+                                                             Zaznamopouziti.ZarizeniID = Zar.ZarizeniID)
 
 GO
 /*Napsat funkci co bude scitat spotreby jednotlivych tovaren, hal, zarizeni a zaznamu o spotrebe a pronasobi to cenou/kWh a vrati celkovou cenu spotreby.*/
