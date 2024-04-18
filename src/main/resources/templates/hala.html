@@ -107,7 +107,7 @@
         <td th:text="${e.nazev}"></td>
         <td th:text="${e.spotreba}"></td>
         <td th:text="${e.time}"></td>
-        <td><div th:text="${e.zamestnanec.jmeno}"></div> <div th:text="${e.zamestnanec.prijmeni}"></div></td>
+        <td><div th:text="${e.zamestnanec} ? ${e.zamestnanec.jmeno + ' ' + e.zamestnanec.prijmeni}"></div></td>
     </tr>
     </thead>
     <tbody>
