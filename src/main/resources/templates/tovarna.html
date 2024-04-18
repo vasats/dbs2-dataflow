@@ -67,7 +67,7 @@
   </form>
 </div>
     <h1>TOVÁRNA</h1>
-  <img th:src="@{${tovarna.foto}}" alt="tovarna" width="20%" height="20%">
+  <img th:src="@{'/fotos/' + ${tovarna.foto}}" alt="tovarna" width="20%" height="20%">
   <br>
   <p id="spotreba" th:text="${'Celková spotřeba:' + spotreba + ' kwh'}"></p>
   <table id="tovarna">
