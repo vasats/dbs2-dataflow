@@ -30,9 +30,8 @@ GO
 
 CREATE TABLE [Smena]
 (
-    [Casdo] time(5) NULL,
-    [Casod] time(5) NOT NULL,
-    [Datumod] date NOT NULL,
+    [Casdo] smalldatetime NULL,
+    [Casod] smalldatetime NOT NULL,
     [SmenaID] int NOT NULL IDENTITY (1, 1)
 )
 GO
@@ -208,6 +207,17 @@ create user Webserver from Login WebServer
 alter role db_owner add member Webserver
 go
 
+create type [dbo].[ZaznamOPouziti] as table
+(
+    [Datumcas] smalldatetime NOT NULL,
+    [ZaznamopouzitiID] int NOT NULL,
+    [ZamestnanecID] int NOT NULL,
+    [ZarizeniID] int NOT NULL
+)
+go
+set implicit_transactions off
+go
+
 CREATE PROCEDURE updateSmenaInclusion @ZamestnanecIDtoCheck int, @SmenaIdToCheck int, @HalaIdToCheck int
 AS
     if (@ZamestnanecIDtoCheck not in (SELECT T.ZamestnanecID
@@ -217,39 +227,54 @@ AS
         Insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
         values (@HalaIdToCheck, @ZamestnanecIDtoCheck, @SmenaIdToCheck)
 go
-CREATE PROCEDURE checkSmenaInclusion @RowsToCheck ZaznamOPouziti READONLY
+CREATE PROCEDURE checkSmenaInclusion @Cas smalldatetime, @Zamestnanec int, @Zarizeni int
 AS
-    Begin TRANSACTION
+begin
+    begin transaction tr
 
-Declare @HalaID as int;
-    set @HalaID = (select Z.HalaID from Zarizeni Z where Z.ZarizeniID = @ZarizeniID);
-Declare @DateTimeFrom as smalldatetime;
-    --set @DateTimefrom = CONVERT(inserted.)
-Declare @SmenaID as int;
-    /*set @SmenaID = (select S.SmenaID from Smena S where dateadd(time,@Datumcas,CONVERT(smalldatetime,S.Datumod))  and);*/
-    set @SmenaID = 1;
-        /*select S.SmenaID from Smena S where S.Datumod like case when S.Casdo+S.Casod > '24:00' then  );*/
+        Declare @HalaID as int;
+        set @HalaID = (select Z.HalaID from Zarizeni Z where Z.ZarizeniID = @Zarizeni);
+        Declare @SmenaID as int;
+        set @SmenaID = (select S.SmenaID from Smena S where @Cas between S.Casod and S.Casdo);
 
-    if @SmenaID is null
-        rollback transaction;
-begin try;
-    execute updateSmenaInclusion @ZamestnanecID, @SmenaID, @HalaID
-    insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
-    values(@Datumcas,@ZamestnanecID,@ZarizeniID)
-    commit transaction
-end try
-begin catch
-    rollback transaction
+        if @SmenaID is null
+            rollback tran tr;
+    begin try;
 
-end catch
+        execute updateSmenaInclusion @Zamestnanec, @SmenaID, @HalaID
+        insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
+        values(@Cas,@Zamestnanec,@Zarizeni)
+        commit tran tr
+    end try
+    begin catch
+        rollback tran tr
+    end catch
+end
+
 go
 
 CREATE TRIGGER newUse ON Zaznamopouziti
     instead of INSERT AS
-    declare @date as smalldatetime = (select Datumcas from inserted);
-    declare @zamestnanec as int = (select ZamestnanecID from inserted);
-    declare @zarizeni as int = (select ZarizeniID from inserted);
-    execute checkSmenaInclusion @Datumcas = @date, @ZamestnanecID = @zamestnanec, @ZarizeniID = @zarizeni
+    begin
+
+
+
+    DECLARE @Cas smalldatetime;
+    DECLARE @Zamestnanec int;
+    DECLARE @Zarizeni int;
+
+    DECLARE insert_cursor CURSOR FOR select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from inserted I inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+
+    OPEN insert_cursor
+
+    FETCH NEXT FROM insert_cursor INTO @Cas,@Zamestnanec,@Zarizeni;
+    While @@FETCH_STATUS = 0
+        begin
+            EXECUTE checkSmenaInclusion @Cas, @Zamestnanec, @Zarizeni
+            FETCH NEXT FROM insert_cursor INTO @Cas, @Zamestnanec, @Zarizeni
+        end
+
+    end
 
 go;
 
@@ -297,56 +322,56 @@ BEGIN
 END;
 go
 
-insert into Smena (DatumOd, Casod, Casdo) values ('3/4/2024', '5:04', '9:14');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/13/2024', '14:02', '8:23');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/20/2024', '19:02', '2:17');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/17/2024', '0:41', '10:38');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/29/2024', '0:57', '11:46');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/19/2024', '9:09', '7:16');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/10/2024', '0:40', '4:40');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/11/2024', '13:12', '10:35');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/3/2024', '19:32', '12:55');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/5/2024', '4:28', '21:40');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/29/2024', '11:15', '21:59');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/25/2024', '6:38', '14:42');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/20/2024', '23:07', '21:33');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/28/2024', '5:51', '7:31');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/15/2024', '0:46', '21:43');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/1/2024', '15:15', '4:23');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/23/2024', '4:11', '20:48');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/30/2024', '22:47', '23:06');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/7/2024', '12:11', '4:34');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/8/2024', '6:11', '12:54');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/18/2024', '1:47', '14:42');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/25/2024', '21:45', '6:16');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/19/2024', '4:20', '2:03');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/12/2024', '17:37', '5:16');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/2/2024', '12:29', '2:06');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/6/2024', '2:15', '19:21');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/4/2024', '2:28', '14:09');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/29/2024', '18:28', '7:37');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/11/2024', '10:30', '0:23');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/30/2024', '12:44', '0:04');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/27/2024', '17:14', '8:55');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/2/2024', '5:00', '9:24');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/26/2024', '21:01', '21:47');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/6/2024', '15:51', '14:24');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/11/2024', '8:11', '5:37');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/24/2024', '23:35', '12:16');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/17/2024', '10:11', '7:01');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/3/2024', '21:00', '2:39');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/3/2024', '11:44', '2:55');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/29/2024', '23:11', '0:00');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/3/2024', '19:56', '16:34');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/26/2024', '3:41', '3:15');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/26/2024', '22:34', '14:35');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/14/2024', '10:26', '17:00');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/13/2024', '10:28', '9:52');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/6/2024', '21:55', '11:27');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/15/2024', '14:17', '21:14');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/28/2024', '20:45', '9:45');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/24/2024', '19:02', '6:25');
-insert into Smena (DatumOd, Casod, Casdo) values ('3/1/2024', '3:36', '12:52');
+insert into Smena (Casod, Casdo) values ('3/4/2024 5:04', '3/4/2024 9:14');
+insert into Smena (Casod, Casdo) values ('3/13/2024 14:02', '3/13/2024 8:23');
+insert into Smena (Casod, Casdo) values ('3/20/2024 19:02', '3/20/2024 2:17');
+insert into Smena (Casod, Casdo) values ('3/17/2024 0:41', '3/17/2024 10:38');
+insert into Smena (Casod, Casdo) values ('3/29/2024 0:57', '3/29/2024 11:46');
+insert into Smena (Casod, Casdo) values ('3/19/2024 9:09', '3/19/2024 7:16');
+insert into Smena (Casod, Casdo) values ('3/10/2024 0:40', '3/10/2024 4:40');
+insert into Smena (Casod, Casdo) values ('3/11/2024 13:12', '3/11/2024 10:35');
+insert into Smena (Casod, Casdo) values ('3/3/2024 19:32', '3/3/2024 12:55');
+insert into Smena (Casod, Casdo) values ('3/5/2024 4:28', '3/5/2024 21:40');
+insert into Smena (Casod, Casdo) values ('3/29/2024 11:15', '3/29/2024 21:59');
+insert into Smena (Casod, Casdo) values ('3/25/2024 6:38', '3/25/2024 14:42');
+insert into Smena (Casod, Casdo) values ('3/20/2024 23:07', '3/20/2024 21:33');
+insert into Smena (Casod, Casdo) values ('3/28/2024 5:51', '3/28/2024 7:31');
+insert into Smena (Casod, Casdo) values ('3/15/2024 0:46', '3/15/2024 21:43');
+insert into Smena (Casod, Casdo) values ('3/1/2024 15:15', '3/1/2024 4:23');
+insert into Smena (Casod, Casdo) values ('3/23/2024 4:11', '3/23/2024 20:48');
+insert into Smena (Casod, Casdo) values ('3/30/2024 22:47', '3/30/2024 23:06');
+insert into Smena (Casod, Casdo) values ('3/7/2024 12:11', '3/7/2024 4:34');
+insert into Smena (Casod, Casdo) values ('3/8/2024 6:11', '3/8/2024 12:54');
+insert into Smena (Casod, Casdo) values ('3/18/2024 1:47', '3/18/2024 14:42');
+insert into Smena (Casod, Casdo) values ('3/25/2024 21:45', '3/25/2024 6:16');
+insert into Smena (Casod, Casdo) values ('3/19/2024 4:20', '3/19/2024 2:03');
+insert into Smena (Casod, Casdo) values ('3/12/2024 17:37', '3/12/2024 5:16');
+insert into Smena (Casod, Casdo) values ('3/2/2024 12:29', '3/2/2024 2:06');
+insert into Smena (Casod, Casdo) values ('3/6/2024 2:15', '3/6/2024 19:21');
+insert into Smena (Casod, Casdo) values ('3/4/2024 2:28', '3/4/2024 14:09');
+insert into Smena (Casod, Casdo) values ('3/29/2024 18:28', '3/29/2024 7:37');
+insert into Smena (Casod, Casdo) values ('3/11/2024 10:30', '3/11/2024 0:23');
+insert into Smena (Casod, Casdo) values ('3/30/2024 12:44', '3/30/2024 0:04');
+insert into Smena (Casod, Casdo) values ('3/27/2024 17:14', '3/27/2024 8:55');
+insert into Smena (Casod, Casdo) values ('3/2/2024 5:00', '3/2/2024 9:24');
+insert into Smena (Casod, Casdo) values ('3/26/2024 21:01', '3/26/2024 21:47');
+insert into Smena (Casod, Casdo) values ('3/6/2024 15:51', '3/6/2024 14:24');
+insert into Smena (Casod, Casdo) values ('3/11/2024 8:11', '3/11/2024 5:37');
+insert into Smena (Casod, Casdo) values ('3/24/2024 23:35', '3/24/2024 12:16');
+insert into Smena (Casod, Casdo) values ('3/17/2024 10:11', '3/17/2024 7:01');
+insert into Smena (Casod, Casdo) values ('3/3/2024 21:00', '3/3/2024 2:39');
+insert into Smena (Casod, Casdo) values ('3/3/2024 11:44', '3/3/2024 2:55');
+insert into Smena (Casod, Casdo) values ('3/29/2024 23:11', '3/29/2024 0:00');
+insert into Smena (Casod, Casdo) values ('3/3/2024 19:56', '3/3/2024 16:34');
+insert into Smena (Casod, Casdo) values ('3/26/2024 3:41', '3/26/2024 3:15');
+insert into Smena (Casod, Casdo) values ('3/26/2024 22:34', '3/26/2024 14:35');
+insert into Smena (Casod, Casdo) values ('3/14/2024 10:26', '3/14/2024 17:00');
+insert into Smena (Casod, Casdo) values ('3/13/2024 10:28', '3/13/2024 9:52');
+insert into Smena (Casod, Casdo) values ('3/6/2024 21:55', '3/6/2024 11:27');
+insert into Smena (Casod, Casdo) values ('3/15/2024 14:17', '3/15/2024 21:14');
+insert into Smena (Casod, Casdo) values ('3/28/2024 20:45', '3/28/2024 9:45');
+insert into Smena (Casod, Casdo) values ('3/24/2024 19:02', '3/24/2024 6:25');
+insert into Smena (Casod, Casdo) values ('3/1/2024 3:36', '3/1/2024 12:52');
 go
 
 insert into Adresa (Cislopopisne, Psc, Ulice) values (29, 26037, 'Fairview');

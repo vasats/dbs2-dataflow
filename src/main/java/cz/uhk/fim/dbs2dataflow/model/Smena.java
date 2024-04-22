@@ -3,6 +3,7 @@ package cz.uhk.fim.dbs2dataflow.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -13,34 +14,24 @@ public class Smena {
     @Column(name = "SmenaID")
     private Integer id;
     @Column(name = "casdo")
-    private LocalTime casDo;
+    private LocalDateTime casDo;
     @Column(name = "casod")
-    private LocalTime casOd;
-    @Column(name = "Datumod")
-    private LocalDate datumOd;
+    private LocalDateTime casOd;
 
-    public LocalTime getCasDo() {
+    public LocalDateTime getCasDo() {
         return casDo;
     }
 
-    public void setCasDo(LocalTime casDo) {
+    public void setCasDo(LocalDateTime casDo) {
         this.casDo = casDo;
     }
 
-    public LocalTime getCasOd() {
+    public LocalDateTime getCasOd() {
         return casOd;
     }
 
-    public void setCasOd(LocalTime casOd) {
+    public void setCasOd(LocalDateTime casOd) {
         this.casOd = casOd;
-    }
-
-    public LocalDate getDatumOd() {
-        return datumOd;
-    }
-
-    public void setDatumOd(LocalDate datumOd) {
-        this.datumOd = datumOd;
     }
 
     public Integer getId() {

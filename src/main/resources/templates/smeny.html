@@ -86,15 +86,13 @@
 <table id="tovarna">
     <thead>
     <tr>
-        <th>Datum</th>
         <th>Čas od</th>
         <th>Čas do</th>
     </tr>
 
     <tr th:each="e: ${smeny}">
 
-        <td> <a th:text="${e.datumOd}" th:href="@{'/smena/' + ${e.id} + '/' + ${hala.HalaID}}"></a></td>
-        <td th:text="${e.casOd}"></td>
+        <td> <a th:text="${e.casOd}" th:href="@{'/smena/' + ${e.id} + '/' + ${hala.HalaID}}"></a></td>
         <td th:text="${e.casDo}"></td>
     </tr>
     </thead>
