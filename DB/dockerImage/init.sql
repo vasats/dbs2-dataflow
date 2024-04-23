@@ -256,8 +256,26 @@ go
 CREATE TRIGGER newUse ON Zaznamopouziti
     instead of INSERT AS
     begin
+        begin tran tr1
+            BEGIN TRY ;
 
+                insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
+                        select Z.HalaID,I.ZamestnanecID,S.SmenaID from inserted I
+                            inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+                            inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
 
+                insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
+                        select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from inserted I
+                            inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+                            inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
+                COMMIT TRAN tr1
+            END TRY
+            BEGIN CATCH
+                ROLLBACK TRAN tr1
+                SELECT ERROR_MESSAGE() AS ErrorMessage
+            end catch
+
+/*
 
     DECLARE @Cas smalldatetime;
     DECLARE @Zamestnanec int;
@@ -273,7 +291,7 @@ CREATE TRIGGER newUse ON Zaznamopouziti
             EXECUTE checkSmenaInclusion @Cas, @Zamestnanec, @Zarizeni
             FETCH NEXT FROM insert_cursor INTO @Cas, @Zamestnanec, @Zarizeni
         end
-
+*/
     end
 
 go;
