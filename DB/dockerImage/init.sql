@@ -227,28 +227,26 @@ AS
         Insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
         values (@HalaIdToCheck, @ZamestnanecIDtoCheck, @SmenaIdToCheck)
 go
-CREATE PROCEDURE checkSmenaInclusion @Cas smalldatetime, @Zamestnanec int, @Zarizeni int
+CREATE PROCEDURE checkSmenaInclusion @inserted ZaznamOPouziti READONLY
 AS
 begin
-    begin transaction tr
+    begin tran tr1
+        BEGIN TRY ;
 
-        Declare @HalaID as int;
-        set @HalaID = (select Z.HalaID from Zarizeni Z where Z.ZarizeniID = @Zarizeni);
-        Declare @SmenaID as int;
-        set @SmenaID = (select S.SmenaID from Smena S where @Cas between S.Casod and S.Casdo);
+            insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
+            select Z.HalaID,I.ZamestnanecID,S.SmenaID from @inserted I
+                                                inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+                                                inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
 
-        if @SmenaID is null
-            rollback tran tr;
-    begin try;
-
-        execute updateSmenaInclusion @Zamestnanec, @SmenaID, @HalaID
-        insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
-        values(@Cas,@Zamestnanec,@Zarizeni)
-        commit tran tr
-    end try
-    begin catch
-        rollback tran tr
-    end catch
+            insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
+            select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from @inserted I
+                                                inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+                                                inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
+            COMMIT TRAN tr1
+        END TRY
+        BEGIN CATCH
+            SELECT ERROR_MESSAGE() AS ErrorMessage
+        end catch
 end
 
 go
@@ -256,24 +254,21 @@ go
 CREATE TRIGGER newUse ON Zaznamopouziti
     instead of INSERT AS
     begin
-        begin tran tr1
-            BEGIN TRY ;
+        insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
+        select Z.HalaID,I.ZamestnanecID,S.SmenaID from inserted I
+                                                           inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+                                                           inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
 
-                insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
-                        select Z.HalaID,I.ZamestnanecID,S.SmenaID from inserted I
-                            inner join Smena S on I.Datumcas between S.Casod and S.Casdo
-                            inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
+        insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
+        select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from inserted I
+                                                                inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+                                                                inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
 
-                insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
-                        select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from inserted I
-                            inner join Smena S on I.Datumcas between S.Casod and S.Casdo
-                            inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
-                COMMIT TRAN tr1
-            END TRY
-            BEGIN CATCH
-                ROLLBACK TRAN tr1
-                SELECT ERROR_MESSAGE() AS ErrorMessage
-            end catch
+        /*
+        declare @insert ZaznamOPouziti
+        insert into @insert (Datumcas, ZaznamopouzitiID, ZamestnanecID, ZarizeniID)
+            select * from inserted
+        execute checkSmenaInclusion @insert*/
 
 /*
 
