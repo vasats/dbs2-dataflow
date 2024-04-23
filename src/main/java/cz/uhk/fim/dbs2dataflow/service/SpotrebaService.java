@@ -21,5 +21,9 @@ public class SpotrebaService {
     public List<ZaznamOSpotrebe> getByHala(Hala hala){
         return repository.findAllByZarizeniHala(hala);
     }
+    public void saveAll(List<ZaznamOSpotrebe> spotreby){
+        repository.saveAll(spotreby);
+
+    }
 
 }
