@@ -18,4 +18,7 @@ public class SeznamZamestnancuService {
 
         return repository.getAllBySeznamZamestnancuID_Hala_HalaIDAndSeznamZamestnancuID_SmenaId(halaID,smenaID);
     }
+    public List<SeznamZamestnancuSmeny> getAllbyHalaID(int id){
+        return repository.getAllBySeznamZamestnancuID_Hala_HalaID(id);
+    }
 }

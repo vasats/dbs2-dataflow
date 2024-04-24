@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPOTŘEBA ENERGIÍ</title>
+  <link th:href="@{/styles/index.css}" rel="stylesheet" />
+</head>
+<body>
+<h1>ZAMĚSTNANCI</h1>
+
+<table id="tovarna">
+  <thead>
+    <tr>
+      <th>Jméno</th>
+      <th>Telefon</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="e: ${zamestnanci}">
+      <td th:text="${e.jmeno} + ' ' + ${e.prijmeni}"></td>
+      <td th:text="${e.telefon}"></td>
+      <td th:text="${e.email}"></td>
+    </tr>
+  </tbody>
+</table>
+
+<form sec:authorize="hasRole('ADMIN')" th:action="@{/zamestnanci}"  method="post">
+  <div th:object="${newZamestnanec}">
+    <label for="jmeno">Jméno: </label>
+    <input type="text" id="jmeno" th:field="*{jmeno}" placeholder="jméno">
+
+    <label for="prijmeni">Příjmení: </label>
+    <input type="text" id="prijmeni" th:field="*{prijmeni}" placeholder="příjmení">
+
+    <label for="telefon">Telefon: </label>
+    <input type="text" id="telefon" th:field="*{telefon}" placeholder="telefon">
+
+    <label for="email">Email: </label>
+    <input type="text" id="email" th:field="*{email}" placeholder="email">
+
+    <label for="rodnecislo">Rodné číslo: </label>
+    <input type="text" id="rodnecislo" th:field="*{rodneCislo}" placeholder="rodné číslo">
+  </div>
+  <div th:object="${newAdresa}">
+    <label for="Psc">Psč: </label>
+    <input type="text" id="Psc" th:field="*{psc}" placeholder="Psč">
+
+    <label for="ulice">Ulice: </label>
+    <input type="text" id="ulice" th:field="*{ulice}" placeholder="ulice">
+
+    <label for="cisloPopisne">Číslo popisné: </label>
+    <input type="text" id="cisloPopisne" th:field="*{cisloPopisne}" placeholder="číslo popisné">
+  </div>
+
+  <input type="submit" th:value="Přidat">
+</form>
+
+
+
+</body>
+</html>

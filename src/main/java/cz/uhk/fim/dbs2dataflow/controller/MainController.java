@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -37,6 +39,10 @@ public class MainController {
 
     @Autowired
     SmenaService smenaService;
+    @Autowired
+    ZamestnanecService zamestnanecService;
+    @Autowired
+    AdresaService adresaService;
 
     @GetMapping(value = "/main")
     public String showMainPage(Model model){
@@ -116,11 +122,33 @@ public class MainController {
     }
     @GetMapping(value = "/hala/{id}/smeny")
     private String showSmeny(@PathVariable("id") int id, Model model){
-        model.addAttribute("smeny", smenaService.getAllByHalaID(id));
+        List<SeznamZamestnancuSmeny> hala = seznamZamestnancuService.getAllbyHalaID(id);
+        Set<Integer> smenyID = new HashSet<>();
+        hala.stream().map((e) -> e.getSeznamZamestnancuID().getSmena().getId()).forEach(smenyID::add);
+
+        model.addAttribute("smeny", smenaService.getAll(smenyID));
         model.addAttribute("hala", halaService.getByID(id));
 
-
         return "smeny";
+    }
+    @GetMapping(value = "/zamestnanci")
+    private String showZamestnanci(Model model){
+
+        model.addAttribute("zamestnanci", zamestnanecService.getAll());
+        model.addAttribute("newZamestnanec", new Zamestnanec());
+        model.addAttribute("newAdresa", new Adresa());
+
+        return "zamestnanci";
+    }
+    @PostMapping(value = "/zamestnanci")
+    private String newZamestnanci(@ModelAttribute(value = "newZamestnanec") Zamestnanec zamestnanec,
+                                  @ModelAttribute(value = "newAdresa") Adresa adresa){
+        zamestnanec.setAdresa(adresa);
+
+        adresaService.save(adresa);
+        zamestnanecService.save(zamestnanec);
+
+        return "redirect:/zamestnanci";
     }
     @RequestMapping(value = "/")
     private String fallback(){

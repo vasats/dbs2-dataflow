@@ -15,5 +15,8 @@ public class SmenaService {
     public List<Smena> getAllByHalaID(Integer id){
         return (List<Smena>) repository.findAll();
     }
+    public List<Smena> getAll(Iterable<Integer> IDs){
+        return (List<Smena>) repository.findAllById(IDs);
+    }
 
 }

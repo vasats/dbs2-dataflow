@@ -13,4 +13,7 @@ import java.util.List;
 public interface SeznamZamestnancuRepository extends CrudRepository<SeznamZamestnancuSmeny, SeznamZamestnancuID> {
     @Query
     List<SeznamZamestnancuSmeny> getAllBySeznamZamestnancuID_Hala_HalaIDAndSeznamZamestnancuID_SmenaId(int halaID, int smenaID);
+
+    @Query
+    List<SeznamZamestnancuSmeny> getAllBySeznamZamestnancuID_Hala_HalaID(int id);
 }
