@@ -206,7 +206,7 @@ CREATE LOGIN WebServer
 create user Webserver from Login WebServer
 alter role db_owner add member Webserver
 go
-
+/*
 create type [dbo].[ZaznamOPouziti] as table
 (
     [Datumcas] smalldatetime NOT NULL,
@@ -248,6 +248,32 @@ begin
             SELECT ERROR_MESSAGE() AS ErrorMessage
         end catch
 end
+*/
+go
+create procedure insertZamestnanecAdresa @jmeno varchar(40), @prijmeni varchar(40),@telefon char(12),
+                                         @email varchar(40), @rodneCislo char(10), @psc char(10), @ulice varchar(20),
+                                         @cislopopisne varchar(10)
+    as
+    begin
+        begin transaction tr1
+            BEGIN TRY
+                INSERT INTO Adresa (Cislopopisne, Psc, Ulice)
+                VALUES (@cislopopisne, @psc, @ulice)
+
+                declare @id int = SCOPE_IDENTITY()
+
+                INSERT INTO Zamestnanec (Email, Jmeno, Prijmeni, Rodnecislo, Telefon, AdresaID, WebovyucetID)
+                VALUES (@email, @jmeno,@prijmeni,@rodneCislo,@telefon,@id,null)
+                commit transaction tr1
+
+                select * from Zamestnanec where ZamestnanecID=SCOPE_IDENTITY()
+
+            END TRY
+            begin catch
+                rollback transaction tr1
+            end catch
+
+    end
 
 go
 
@@ -263,7 +289,7 @@ CREATE TRIGGER newUse ON Zaznamopouziti
         select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from inserted I
                                                                 inner join Smena S on I.Datumcas between S.Casod and S.Casdo
                                                                 inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
-
+    end
         /*
         declare @insert ZaznamOPouziti
         insert into @insert (Datumcas, ZaznamopouzitiID, ZamestnanecID, ZarizeniID)
@@ -287,7 +313,7 @@ CREATE TRIGGER newUse ON Zaznamopouziti
             FETCH NEXT FROM insert_cursor INTO @Cas, @Zamestnanec, @Zarizeni
         end
 */
-    end
+
 
 go;
 

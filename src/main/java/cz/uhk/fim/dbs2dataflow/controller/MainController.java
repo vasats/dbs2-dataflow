@@ -144,9 +144,7 @@ public class MainController {
     private String newZamestnanci(@ModelAttribute(value = "newZamestnanec") Zamestnanec zamestnanec,
                                   @ModelAttribute(value = "newAdresa") Adresa adresa){
         zamestnanec.setAdresa(adresa);
-
-        adresaService.save(adresa);
-        zamestnanecService.save(zamestnanec);
+        zamestnanecService.insertZamestnanecAdresa(adresa,zamestnanec);
 
         return "redirect:/zamestnanci";
     }
