@@ -43,6 +43,8 @@ public class MainController {
     ZamestnanecService zamestnanecService;
     @Autowired
     AdresaService adresaService;
+    @Autowired
+    MestoService mestoService;
 
     @GetMapping(value = "/main")
     public String showMainPage(Model model){
@@ -50,7 +52,8 @@ public class MainController {
         List<TovarnaInfo> tovarnyInfo = tovarny.stream()
                 .map((tovarna ->
                         new TovarnaInfo(tovarna,
-                                halaService.getAmountByTovarna(tovarna))))
+                                halaService.getAmountByTovarna(tovarna),
+                                mestoService.getByPsc(tovarna.getAdresa().getPsc()).getMesto())))
                 .toList();
         model.addAttribute("tovarny",tovarnyInfo);
 

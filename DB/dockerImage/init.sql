@@ -95,6 +95,12 @@ CREATE TABLE [Zaznamospotrebe]
 )
 GO
 
+CREATE TABLE [Města]
+(
+    [Psc] char(5) PRIMARY KEY NOT NULL,
+    [Mesto] varchar(50) NOT NULL
+)
+
 /* Create Primary Keys, Indexes, Uniques, Checks */
 
 ALTER TABLE [Adresa]
