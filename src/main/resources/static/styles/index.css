@@ -21,7 +21,7 @@ h1 {
 img {
     position: absolute;
     top: 40px;
-    left: 80px;
+    right: 80px;
 }
 nav {
     display: inline;
@@ -110,4 +110,9 @@ input[type="submit"] {
 #flexbox {
     display: flex;
 
+}
+#tovarnainfo {
+    position:absolute;
+    top: 100px;
+    left: 80px;
 }

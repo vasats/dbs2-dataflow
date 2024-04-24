@@ -17,21 +17,23 @@
   <h1>TOVÁRNA</h1>
   <img th:src="@{'/fotos/' + ${tovarna.foto}}" alt="tovarna" width="20%" height="20%">
   <br>
-  <p id="spotreba" th:text="${'Celková spotřeba:' + spotreba + ' kwh'}"></p>
+  <div id="tovarnainfo">
+    <p id="spotreba" th:text="${'Celková spotřeba: ' + spotreba + ' kwh'}"></p>
+  </div>
   <table id="tovarna">
     <thead>
-    <tr>
-      <th>NÁZEV HALY</th>
-      <th>POČET ZAŘÍZENÍ</th>
-    </tr>
+      <tr>
+        <th>NÁZEV HALY</th>
+        <th>POČET ZAŘÍZENÍ</th>
+      </tr>
     </thead>
     <tbody>
-    <tr th:each="e: ${haly}">
-      <td>
-        <a th:href="@{'/hala/'+${e.halaID}}" th:text="${e.oznaceni}"></a>
-      </td>
-      <td th:text="${e.pocetZarizeni}"></td>
-    </tr>
+      <tr th:each="e: ${haly}">
+        <td>
+          <a th:href="@{'/hala/'+${e.halaID}}" th:text="${e.oznaceni}"></a>
+        </td>
+        <td th:text="${e.pocetZarizeni}"></td>
+      </tr>
     </tbody>
   </table>
 
