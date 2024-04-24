@@ -1,0 +1,113 @@
+body {
+    background-color: white;
+    height: 100vh;
+    margin: 0;
+    position: relative
+}
+
+h1 {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid black;
+}
+
+img {
+    position: absolute;
+    top: 40px;
+    left: 80px;
+}
+nav {
+    display: inline;
+    position: relative;
+    top: 50px;
+    left: 150px;
+}
+nav a {
+    margin: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#datum {
+    font-size: 17px;
+    position: absolute;
+    top: 50%;
+    left: 100px;
+    transform: translateY(-50%);
+}
+
+table {
+    border-collapse: collapse;
+    width: 60%;
+    margin: 1cm;
+    margin-top: 0.5px;
+    position: absolute;
+    top: 210px;
+    left: 40%;
+    transform: translateX(-50%);
+}
+
+th, td {
+    border: 2px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+}
+
+th {
+    background-color: #EEEEEE;
+}
+
+tr:nth-child(even) {
+    background-color: white;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+}
+#header {
+    float: right;
+    margin-top: 200px;
+    margin-right: 20px;
+}
+
+form {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 300px;
+    float: right;
+    margin: 1cm;
+    margin-top: 0.5px;
+    top: 300px;
+    position: sticky;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: calc(100% - 12px); /* Adjust width to fill the container */
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#flexbox {
+    display: flex;
+
+}

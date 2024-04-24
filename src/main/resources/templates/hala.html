@@ -1,120 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPOTŘEBA ENERGIÍ</title>
-    <style>
-        body {
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            position: relative;
-        }
-
-        h1 {
-            text-align: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
-            position: absolute;
-            top: 55px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 2px solid black;
-        }
-
-        #header {
-            background-color: #f2f2f2;
-            height: 50px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 0 5px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        #datum {
-            font-size: 17px;
-            position: absolute;
-            top: 50%;
-            left: 100px;
-            transform: translateY(-50%);
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 60%;
-            margin: 1cm;
-            margin-top: 0.5px;
-            position: absolute;
-            top: 210px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        th, td {
-            border: 2px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
-
-        th {
-            background-color: #EEEEEE;
-        }
-
-        tr:nth-child(even) {
-            background-color: white;
-        }
-
-        tr:nth-child(odd) {
-            background-color: white;
-        }
-    </style>
+    <link th:href="@{/styles/index.css}" rel="stylesheet" />
 </head>
 <body>
-<div id="header">
-    <div id="halButton"></div>
-    <form>
-        <label for="datum"></label>
-        <input type="date" id="datum" value="2024-11" style="font-size: 16px;">
-
-    </form>
+<nav>
+    <a th:text="${'Továrny'}" th:href="@{'/'}"></a>
     <a th:text="${'Seznam zařízení haly'}" th:href="@{'/hala/' + ${hala.halaID} + '/zarizeni'}"></a>
     <a th:text="${'Směny'}" th:href="@{'/hala/' + ${hala.halaID} + '/smeny'}"></a>
-</div>
+    <a th:text="${'Zaměstnanci'}" th:href="@{'/zamestnanci'}"></a>
+</nav>
 
 <h1>HALA</h1>
 
 <table id="tovarna">
     <thead>
-    <tr>
-        <th>Označení zařízení</th>
-        <th>Název zařízení</th>
-        <th>Spotřeba</th>
-        <th>Čas</th>
-        <th>Zaměstnanec</th>
-    </tr>
-    <tr th:each="e: ${zarizeni}">
-        <td th:text="${e.oznaceni}"></td>
-        <td th:text="${e.nazev}"></td>
-        <td th:text="${e.spotreba}"></td>
-        <td th:text="${e.time}"></td>
-        <td><div th:text="${e.zamestnanec} ? ${e.zamestnanec.jmeno + ' ' + e.zamestnanec.prijmeni}"></div></td>
-    </tr>
+        <tr>
+            <th>Označení zařízení</th>
+            <th>Název zařízení</th>
+            <th>Spotřeba</th>
+            <th>Čas</th>
+            <th>Zaměstnanec</th>
+        </tr>
     </thead>
     <tbody>
-
+        <tr th:each="e: ${zarizeni}">
+            <td th:text="${e.oznaceni}"></td>
+            <td th:text="${e.nazev}"></td>
+            <td th:text="${e.spotreba}"></td>
+            <td th:text="${e.time}"></td>
+            <td><div th:text="${e.zamestnanec} ? ${e.zamestnanec.jmeno + ' ' + e.zamestnanec.prijmeni}"></div></td>
+        </tr>
     </tbody>
 </table>
-
 
 </body>
 </html>

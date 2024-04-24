@@ -1,91 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SPOTŘEBA ENERGIÍ</title>
-  <style>
-    body {
-      background-color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      position: relative;
-    }
-    h1 {
-      text-align: center;
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
-      position: absolute;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 2px solid black;
-    }
-    table {
-      border-collapse: collapse;
-      width: 60%;
-      margin: 1cm;
-      margin-top: 0.5px;
-      position: absolute;
-      top: 250px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    th, td {
-      border: 2px solid #dddddd;
-      text-align: left;
-      padding: 12px;
-    }
-    th {
-      background-color: #EEEEEE;
-    }
-    tr:nth-child(even) {
-      background-color: white;
-    }
-    tr:nth-child(odd) {
-      background-color: white;
-    }
-    img {
-      position: absolute;
-      top: 40px;
-      left: 80px;
-    }
-  </style>
+  <link th:href="@{/styles/index.css}" rel="stylesheet" />
 
 </head>
 <body>
-<div id="header">
-  <form th:action="@{/tovarna/__${tovarna.id}__}" th:object="${newHala}" method="post">
-    <label for="oznaceni">Oznaceni: </label>
-    <input type="text" id="oznaceni" th:field="*{oznaceni}" placeholder="označení">
-    <input type="submit" th:value="Přidat">
-  </form>
-</div>
-    <h1>TOVÁRNA</h1>
+  <nav>
+    <a th:text="${'Továrny'}" th:href="@{'/'}"></a>
+    <a th:text="${'Zaměstnanci'}" th:href="@{'/zamestnanci'}"></a>
+  </nav>
+
+
+  <h1>TOVÁRNA</h1>
   <img th:src="@{'/fotos/' + ${tovarna.foto}}" alt="tovarna" width="20%" height="20%">
   <br>
   <p id="spotreba" th:text="${'Celková spotřeba:' + spotreba + ' kwh'}"></p>
   <table id="tovarna">
-  <thead>
-  <tr>
-    <th>NÁZEV HALY</th>
-    <th>POČET ZAŘÍZENÍ</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="e: ${haly}">
-    <td>
-      <a th:href="@{'/hala/'+${e.halaID}}" th:text="${e.oznaceni}"></a>
-    </td>
-    <td th:text="${e.pocetZarizeni}"></td>
-  </tr>
-  </tbody>
-</table>
+    <thead>
+    <tr>
+      <th>NÁZEV HALY</th>
+      <th>POČET ZAŘÍZENÍ</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="e: ${haly}">
+      <td>
+        <a th:href="@{'/hala/'+${e.halaID}}" th:text="${e.oznaceni}"></a>
+      </td>
+      <td th:text="${e.pocetZarizeni}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+<form sec:authorize="hasRole('ADMIN')" th:action="@{/tovarna/__${tovarna.id}__}" th:object="${newHala}" method="post">
+  <h3>Přidat halu</h3>
+  <label for="oznaceni">Oznaceni: </label>
+  <input type="text" id="oznaceni" th:field="*{oznaceni}" placeholder="označení">
+  <input type="submit" th:value="Přidat">
+</form>
 
 </body>
 </html>
