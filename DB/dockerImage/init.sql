@@ -310,17 +310,15 @@ AS SELECT Zar.Oznaceni,
                                                              Zaznamopouziti.ZarizeniID = Zar.ZarizeniID)
 
 GO
-/*Napsat funkci co bude scitat spotreby jednotlivych tovaren, hal, zarizeni a zaznamu o spotrebe a pronasobi to cenou/kWh a vrati celkovou cenu spotreby.*/
+
 SELECT SUM(spotreba) AS celkova_spotreba
 FROM ZaznamOSpotrebe;
  go
 CREATE FUNCTION CelkovaCenaSpotreby(@id int)
-    RETURNS float  -- Návratový datový typ je DECIMAL s přesností 18 číslic a 2 desetinnými místy
+    RETURNS float
 AS
 BEGIN
-    DECLARE @CelkovaCena float;  -- Deklarace proměnné pro uchování celkové ceny
-    -- Výpočet celkové ceny spotřeby pomocí součtu spotřeby v jednotlivých záznamech o spotřebě a ceny za kWh
-    --přepsat na zaznam o spotrebe
+    DECLARE @CelkovaCena float;
     SELECT @CelkovaCena = SUM(zaznamOSpotrebe.Spotreba * T.CenaZaKWh)
     FROM Zaznamospotrebe
              INNER JOIN Zarizeni Z on Zaznamospotrebe.ZarizeniID = Z.ZarizeniID
@@ -330,7 +328,6 @@ BEGIN
 
     if @CelkovaCena IS NULL
         return 0
-    -- Návrat celkové ceny spotřeby
     RETURN @CelkovaCena;
 END;
 go
@@ -495,16 +492,16 @@ insert into Adresa (Cislopopisne, Psc, Ulice) values (21, 93047, 'Morrow');
 
 
 go
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$qfSuOcDcSuh1IwxmPZmmdeaSJDySEokS/h4CiwsmWRsXefZfmfoR2', 'mmansfield0', 'admin');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$Lz/mm5WCFOmGOjLyBzsh9eLswz3vhQzChvAIFTzCde749T8HIeQMW', 'acockshtt1', 'admin');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$KMb7O/hoasfUwFwVr9JJDuotKgo.5W.cjEh6zG5.VXNuNE6pJiIUq', 'crealff2', 'user');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$bXsbfrTFmRrM/IXU3PO2q.14tEXbu5q1pT9SLFECsTVA6j3pnoiiy', 'afernyhough3', 'user');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$odFPmI6b3AYG9YwYqUGzVOxux/8x4m5GV.12ELD.9NgxwMvI8zeLi', 'smacandie4', 'user');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$S6q7bRABIU8l/tjHVdlww.cl.NBl5E7LRP7Br9dVKAnPswAVaFNgK', 'dportis5', 'user');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$jiw1wObPgH.YF8YDk8UP5e57G//B9x1mQuq6/n4kjTNJk90fTskJy', 'klockhurst6', 'user');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$tY8oUbn5HQnd3aGPPKCkpujwuO0HOWTSyPPd.JqXGN.aj9UUiV9.q', 'jbrunelleschi7', 'user');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$K5mBeljUxRhsXkXfzEEJxe0Cj5H.zHdZr5GtTfewiOmEUNoWcmxsm', 'vpleasaunce8', 'user');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$clsCyW845YQQtx2rDD/kQ.Ktfg3lUP9zpZMR.WuT46Iu7d7aPlG4y', 'mishchenko9', 'user');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$qfSuOcDcSuh1IwxmPZmmdeaSJDySEokS/h4CiwsmWRsXefZfmfoR2', 'mmansfield0', 'ROLE_ADMIN');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$Lz/mm5WCFOmGOjLyBzsh9eLswz3vhQzChvAIFTzCde749T8HIeQMW', 'acockshtt1', 'ROLE_ADMIN');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$KMb7O/hoasfUwFwVr9JJDuotKgo.5W.cjEh6zG5.VXNuNE6pJiIUq', 'crealff2', 'ROLE_USER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$bXsbfrTFmRrM/IXU3PO2q.14tEXbu5q1pT9SLFECsTVA6j3pnoiiy', 'afernyhough3', 'ROLE_USER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$odFPmI6b3AYG9YwYqUGzVOxux/8x4m5GV.12ELD.9NgxwMvI8zeLi', 'smacandie4', 'ROLE_USER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$S6q7bRABIU8l/tjHVdlww.cl.NBl5E7LRP7Br9dVKAnPswAVaFNgK', 'dportis5', 'ROLE_USER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$jiw1wObPgH.YF8YDk8UP5e57G//B9x1mQuq6/n4kjTNJk90fTskJy', 'klockhurst6', 'ROLE_USER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$tY8oUbn5HQnd3aGPPKCkpujwuO0HOWTSyPPd.JqXGN.aj9UUiV9.q', 'jbrunelleschi7', 'ROLE_USER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$K5mBeljUxRhsXkXfzEEJxe0Cj5H.zHdZr5GtTfewiOmEUNoWcmxsm', 'vpleasaunce8', 'ROLE_USER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$clsCyW845YQQtx2rDD/kQ.Ktfg3lUP9zpZMR.WuT46Iu7d7aPlG4y', 'mishchenko9', 'ROLE_USER');
 go
 
 insert into Zamestnanec (Email, Jmeno, Prijmeni, Rodnecislo, Telefon, WebovyucetID, AdresaID) values ('djillions0@paypal.com', 'Eugénie', 'Jillions', 8335247063, '385 590 652', 1, 1);
@@ -2900,4 +2897,5 @@ insert into ZaznamOSpotrebe (Datumcas, Spotreba, ZarizeniID) values ('3/11/2024 
 insert into ZaznamOSpotrebe (Datumcas, Spotreba, ZarizeniID) values ('3/28/2024 17:14', 69.19, 156);
 go
 insert into Webovyucet (Heslohash, Jmeno, Typuctu)
-values ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'admin', 'admin')
+values ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'admin', 'ROLE_ADMIN'),
+    ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'user', 'ROLE_USER')
