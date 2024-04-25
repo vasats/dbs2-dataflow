@@ -32,7 +32,7 @@
         <td>
             <a th:href="@{'/tovarna/'+${e.id}}" th:text="${e.nazev}"></a>
         </td>
-        <td th:text="${e.adresa.toString()}"></td>
+        <td th:text="${e.mesto + ' ' + e.adresa.ulice + ' ' + e.adresa.cisloPopisne}"></td>
         <td th:text="${e.pocetHal}"></td>
         <td th:text="${e.cenaZaKwh}"></td>
     </tr>

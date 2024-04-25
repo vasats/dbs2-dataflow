@@ -95,7 +95,7 @@ CREATE TABLE [Zaznamospotrebe]
 )
 GO
 
-CREATE TABLE [Mesta]
+CREATE TABLE [Mesto]
 (
     [Psc] char(5) PRIMARY KEY NOT NULL,
     [Mesto] varchar(50) NOT NULL
@@ -363,7 +363,7 @@ BEGIN
     RETURN @CelkovaCena;
 END;
 go
-insert into Mesta (Psc, Mesto)
+insert into Mesto (Psc, Mesto)
 values ('55102', N'Jaroměř'),
        ('10000', N'Praha'),
        ('60200', N'Brno'),
