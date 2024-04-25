@@ -95,7 +95,7 @@ CREATE TABLE [Zaznamospotrebe]
 )
 GO
 
-CREATE TABLE [Města]
+CREATE TABLE [Mesta]
 (
     [Psc] char(5) PRIMARY KEY NOT NULL,
     [Mesto] varchar(50) NOT NULL
@@ -363,6 +363,18 @@ BEGIN
     RETURN @CelkovaCena;
 END;
 go
+insert into Mesta (Psc, Mesto)
+values ('55102', N'Jaroměř'),
+       ('10000', N'Praha'),
+       ('60200', N'Brno'),
+       ('70200', N'Ostrava'),
+       ('30100', N'Plzeň'),
+       ('46001', N'Liberec'),
+       ('77900', N'Olomouc'),
+       ('37001', N'České Budějovice'),
+       ('50002', N'Hradec Králové'),
+       ('53002', N'Pardubice')
+go
 
 insert into Smena (Casod, Casdo) values ('3/4/2024 5:04', '3/4/2024 9:14');
 insert into Smena (Casod, Casdo) values ('3/13/2024 14:02', '3/13/2024 8:23');
@@ -516,11 +528,11 @@ insert into Adresa (Cislopopisne, Psc, Ulice) values (2, 44052, 'Bobwhite');
 insert into Adresa (Cislopopisne, Psc, Ulice) values (45, 12109, 'Mendota');
 insert into Adresa (Cislopopisne, Psc, Ulice) values (208, 87553, 'Parkside');
 insert into Adresa (Cislopopisne, Psc, Ulice) values (432, 16228, 'Merchant');
-insert into Adresa (Cislopopisne, Psc, Ulice) values (445, 58513, 'Sachtjen');
-insert into Adresa (Cislopopisne, Psc, Ulice) values (153, 34326, 'Loftsgordon');
-insert into Adresa (Cislopopisne, Psc, Ulice) values (435, 36245, 'Everett');
-insert into Adresa (Cislopopisne, Psc, Ulice) values (266, 36167, 'Maple');
-insert into Adresa (Cislopopisne, Psc, Ulice) values (21, 93047, 'Morrow');
+insert into Adresa (Cislopopisne, Psc, Ulice) values (445, 50002, 'Sachtjen');
+insert into Adresa (Cislopopisne, Psc, Ulice) values (153, 77900, 'Loftsgordon');
+insert into Adresa (Cislopopisne, Psc, Ulice) values (435, 70200, 'Everett');
+insert into Adresa (Cislopopisne, Psc, Ulice) values (266, 60200, 'Maple');
+insert into Adresa (Cislopopisne, Psc, Ulice) values (21, 10000, 'Morrow');
 
 
 go
