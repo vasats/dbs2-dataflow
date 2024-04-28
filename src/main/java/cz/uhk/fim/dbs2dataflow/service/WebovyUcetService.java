@@ -22,6 +22,9 @@ public class WebovyUcetService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         WebovyUcet webovyUcet = webovyUcetRepository.findWebovyUcetByJmeno(username);
+        if (webovyUcet == null){
+            throw new UsernameNotFoundException("ucet not found");
+        }
         return new WebovyUcetUserDetails(webovyUcet);
     }
 }
