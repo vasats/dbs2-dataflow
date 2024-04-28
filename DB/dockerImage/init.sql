@@ -288,13 +288,15 @@ CREATE TRIGGER newUse ON Zaznamopouziti
     begin
         insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
         select Z.HalaID,I.ZamestnanecID,S.SmenaID from inserted I
-                                                           inner join Smena S on I.Datumcas between S.Casod and S.Casdo
-                                                           inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
+                                       inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+                                       inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID
+        where not exists (select S2.HalaID,S2.ZamestnanecID,S2.SmenaID from Seznamzamestnancusmeny S2
+                    where S2.ZamestnanecID = I.ZamestnanecID and S2.SmenaID = S.SmenaID and S2.HalaID = Z.HalaID);
 
         insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
         select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from inserted I
-                                                                inner join Smena S on I.Datumcas between S.Casod and S.Casdo
-                                                                inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
+                                        inner join Smena S on I.Datumcas between S.Casod and S.Casdo
+                                        inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
     end
         /*
         declare @insert ZaznamOPouziti
