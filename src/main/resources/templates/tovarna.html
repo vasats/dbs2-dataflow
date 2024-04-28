@@ -10,7 +10,7 @@
 <body>
   <nav>
     <a th:text="${'Továrny'}" th:href="@{'/'}"></a>
-    <a th:text="${'Zaměstnanci'}" th:href="@{'/zamestnanci'}"></a>
+    <a sec:authorize="hasRole('USER')" th:text="${'Zaměstnanci'}" th:href="@{'/zamestnanci'}"></a>
   </nav>
 
 

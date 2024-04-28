@@ -11,7 +11,7 @@
     <a th:text="${'Továrny'}" th:href="@{'/'}"></a>
     <a th:text="${'Seznam zařízení haly'}" th:href="@{'/hala/' + ${hala.halaID} + '/zarizeni'}"></a>
     <a th:text="${'Směny'}" th:href="@{'/hala/' + ${hala.halaID} + '/smeny'}"></a>
-    <a th:text="${'Zaměstnanci'}" th:href="@{'/zamestnanci'}"></a>
+    <a sec:authorize="hasRole('USER')" th:text="${'Zaměstnanci'}" th:href="@{'/zamestnanci'}"></a>
 </nav>
 
 <h1>HALA</h1>

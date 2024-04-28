@@ -6,7 +6,8 @@
   <title>SPOTŘEBA ENERGIÍ</title>
   <link th:href="@{/styles/index.css}" rel="stylesheet" />
 </head>
-<body>
+<body sec:authorize="hasRole('USER')">
+
 <h1>ZAMĚSTNANCI</h1>
 
 <table id="tovarna">
@@ -26,7 +27,7 @@
   </tbody>
 </table>
 
-<form sec:authorize="hasRole('ADMIN')" th:action="@{/zamestnanci}"  method="post">
+<form th:action="@{/zamestnanci}"  method="post">
   <h3>Přidat zaměstnance</h3>
   <div th:object="${newZamestnanec}">
     <label for="jmeno">Jméno: </label>
