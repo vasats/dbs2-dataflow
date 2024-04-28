@@ -30,6 +30,8 @@ public class HalaService {
         return halas;
     }
     public void addHala(Hala hala, Tovarna tovarna){
+        if (hala.getOznaceni().trim().isBlank())
+            throw new IllegalArgumentException();
         hala.setTovarna(tovarna);
         repository.save(hala);
     }

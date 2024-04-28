@@ -13,6 +13,8 @@ public class ZarizeniService {
     ZarizeniRepository repository;
 
     public void addZarizeni(Zarizeni zarizeni){
+        if (zarizeni.getNazev().trim().isBlank() || zarizeni.getOznaceni().trim().isBlank())
+            throw new IllegalArgumentException();
         repository.save(zarizeni);
     }
     public List<Zarizeni> getByHalaID(Integer id){

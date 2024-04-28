@@ -76,7 +76,9 @@ public class MainController {
     @PostMapping(value = "/tovarna/{id}")
     private RedirectView addNewHala(@ModelAttribute Hala newHala, @PathVariable Integer id){
         Tovarna tovarna = tovarnaService.getTovarnaById(id);
-        halaService.addHala(newHala, tovarna);
+        try {
+            halaService.addHala(newHala, tovarna);
+        } catch (IllegalArgumentException e){}
         return new RedirectView("/tovarna/"+id);
     }
 
@@ -120,7 +122,11 @@ public class MainController {
     private RedirectView addZarizeni(@PathVariable("id") int id, @ModelAttribute Zarizeni newZarizeni){
         newZarizeni.setHala(halaService.getByID(id));
         newZarizeni.setId(null);
-        zarizeniService.addZarizeni(newZarizeni);
+        try {
+            zarizeniService.addZarizeni(newZarizeni);
+        } catch (IllegalArgumentException e){
+
+        }
         return new RedirectView("/hala/"+id+"/zarizeni");
     }
     @GetMapping(value = "/hala/{id}/smeny")
@@ -147,7 +153,11 @@ public class MainController {
     private String newZamestnanci(@ModelAttribute(value = "newZamestnanec") Zamestnanec zamestnanec,
                                   @ModelAttribute(value = "newAdresa") Adresa adresa){
         zamestnanec.setAdresa(adresa);
-        zamestnanecService.insertZamestnanecAdresa(adresa,zamestnanec);
+        try {
+            zamestnanecService.insertZamestnanecAdresa(adresa, zamestnanec);
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
 
         return "redirect:/zamestnanci";
     }

@@ -20,6 +20,34 @@ public class ZamestnanecService {
         repository.save(zamestnanec);
     }
     public void insertZamestnanecAdresa(Adresa adresa, Zamestnanec zamestnanec){
+        if(adresa.getUlice().isBlank())
+            throw new IllegalArgumentException("ulice is blank");
+        if(zamestnanec.getEmail().isBlank() || zamestnanec.getJmeno().isBlank()
+                || zamestnanec.getPrijmeni().isBlank() || zamestnanec.getAdresa() == null)
+            throw new IllegalArgumentException("zamestnanec field blank");
+
+        String psc = adresa.getPsc();
+        psc = psc.replace(" ","").trim();
+        if(!psc.matches("[0-9]{5}"))
+            throw new IllegalArgumentException("illegal psc");
+        adresa.setPsc(psc);
+
+        String cisloPopisne = adresa.getCisloPopisne().trim();
+        if (!cisloPopisne.matches("[0-9]+|[0-9]+/[0-9]+"))
+            throw new IllegalArgumentException("illegal cislo popisne");
+        adresa.setCisloPopisne(cisloPopisne);
+
+        String email = zamestnanec.getEmail().trim();
+        if (!email.matches("^(.+)@(\\S+)$"))
+            throw new IllegalArgumentException("illegal email");
+        zamestnanec.setEmail(email);
+
+        String rodneCislo = zamestnanec.getRodneCislo();
+        rodneCislo = rodneCislo.replace("/","").trim();
+        if(!rodneCislo.matches("[0-9]{10}"))
+            throw new IllegalArgumentException("illegal rodne cislo");
+        zamestnanec.setRodneCislo(rodneCislo);
+
         Zamestnanec zamestnanec1 = repository.insertZamestnanecAdresa(zamestnanec.getJmeno(), zamestnanec.getPrijmeni(), zamestnanec.getRodneCislo(),
                 zamestnanec.getTelefon(), zamestnanec.getEmail(), adresa.getPsc(), adresa.getUlice(), adresa.getCisloPopisne());
     }
