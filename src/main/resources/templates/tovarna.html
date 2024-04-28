@@ -10,7 +10,7 @@
 <body>
   <nav>
     <a th:text="${'Továrny'}" th:href="@{'/'}"></a>
-    <a sec:authorize="hasRole('USER')" th:text="${'Zaměstnanci'}" th:href="@{'/zamestnanci'}"></a>
+    <a sec:authorize="hasRole('MANAGER')" th:text="${'Zaměstnanci'}" th:href="@{'/zamestnanci'}"></a>
   </nav>
 
 
@@ -37,7 +37,7 @@
     </tbody>
   </table>
 
-<form sec:authorize="hasRole('ADMIN')" th:action="@{/tovarna/__${tovarna.id}__}" th:object="${newHala}" method="post">
+<form th:action="@{/tovarna/__${tovarna.id}__}" th:object="${newHala}" method="post">
   <h3>Přidat halu</h3>
   <label for="oznaceni">Oznaceni: </label>
   <input type="text" id="oznaceni" th:field="*{oznaceni}" placeholder="označení">

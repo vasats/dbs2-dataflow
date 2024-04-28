@@ -26,7 +26,7 @@
     </tbody>
 </table>
 
-<form sec:authorize="hasRole('ADMIN')" th:action="@{/hala/__${hala.halaID}__/zarizeni}" th:object="${newZarizeni}" method="post">
+<form th:action="@{/hala/__${hala.halaID}__/zarizeni}" th:object="${newZarizeni}" method="post">
     <h3>Přidat zařízení</h3>
     <label for="oznaceni">Označení: </label>
     <input type="text" id="oznaceni" th:field="*{oznaceni}" placeholder="označení">

@@ -498,14 +498,14 @@ insert into Adresa (Cislopopisne, Psc, Ulice) values (21, 10000, 'Morrow');
 go
 insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$qfSuOcDcSuh1IwxmPZmmdeaSJDySEokS/h4CiwsmWRsXefZfmfoR2', 'mmansfield0', 'ROLE_ADMIN');
 insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$Lz/mm5WCFOmGOjLyBzsh9eLswz3vhQzChvAIFTzCde749T8HIeQMW', 'acockshtt1', 'ROLE_ADMIN');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$KMb7O/hoasfUwFwVr9JJDuotKgo.5W.cjEh6zG5.VXNuNE6pJiIUq', 'crealff2', 'ROLE_USER');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$bXsbfrTFmRrM/IXU3PO2q.14tEXbu5q1pT9SLFECsTVA6j3pnoiiy', 'afernyhough3', 'ROLE_USER');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$odFPmI6b3AYG9YwYqUGzVOxux/8x4m5GV.12ELD.9NgxwMvI8zeLi', 'smacandie4', 'ROLE_USER');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$S6q7bRABIU8l/tjHVdlww.cl.NBl5E7LRP7Br9dVKAnPswAVaFNgK', 'dportis5', 'ROLE_USER');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$jiw1wObPgH.YF8YDk8UP5e57G//B9x1mQuq6/n4kjTNJk90fTskJy', 'klockhurst6', 'ROLE_USER');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$tY8oUbn5HQnd3aGPPKCkpujwuO0HOWTSyPPd.JqXGN.aj9UUiV9.q', 'jbrunelleschi7', 'ROLE_USER');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$K5mBeljUxRhsXkXfzEEJxe0Cj5H.zHdZr5GtTfewiOmEUNoWcmxsm', 'vpleasaunce8', 'ROLE_USER');
-insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$clsCyW845YQQtx2rDD/kQ.Ktfg3lUP9zpZMR.WuT46Iu7d7aPlG4y', 'mishchenko9', 'ROLE_USER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$KMb7O/hoasfUwFwVr9JJDuotKgo.5W.cjEh6zG5.VXNuNE6pJiIUq', 'crealff2', 'ROLE_MANAGER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$bXsbfrTFmRrM/IXU3PO2q.14tEXbu5q1pT9SLFECsTVA6j3pnoiiy', 'afernyhough3', 'ROLE_MANAGER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$odFPmI6b3AYG9YwYqUGzVOxux/8x4m5GV.12ELD.9NgxwMvI8zeLi', 'smacandie4', 'ROLE_MANAGER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$S6q7bRABIU8l/tjHVdlww.cl.NBl5E7LRP7Br9dVKAnPswAVaFNgK', 'dportis5', 'ROLE_MANAGER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$jiw1wObPgH.YF8YDk8UP5e57G//B9x1mQuq6/n4kjTNJk90fTskJy', 'klockhurst6', 'ROLE_MANAGER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$tY8oUbn5HQnd3aGPPKCkpujwuO0HOWTSyPPd.JqXGN.aj9UUiV9.q', 'jbrunelleschi7', 'ROLE_MANAGER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$K5mBeljUxRhsXkXfzEEJxe0Cj5H.zHdZr5GtTfewiOmEUNoWcmxsm', 'vpleasaunce8', 'ROLE_MANAGER');
+insert into Webovyucet (Heslohash, Jmeno, Typuctu) values ('$2a$04$clsCyW845YQQtx2rDD/kQ.Ktfg3lUP9zpZMR.WuT46Iu7d7aPlG4y', 'mishchenko9', 'ROLE_MANAGER');
 go
 
 insert into Zamestnanec (Email, Jmeno, Prijmeni, Rodnecislo, Telefon, WebovyucetID, AdresaID) values ('djillions0@paypal.com', 'Eugénie', 'Jillions', 8335247063, '385 590 652', 1, 1);
@@ -3905,4 +3905,4 @@ insert into ZaznamOSpotrebe (Datumcas, Spotreba, ZarizeniID) values ('3/28/2024 
 go
 insert into Webovyucet (Heslohash, Jmeno, Typuctu)
 values ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'admin', 'ROLE_ADMIN'),
-    ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'user', 'ROLE_USER')
+    ('$2a$10$eKQQYAPTFJDXD6lq76cH1OFSEsBxZDbD9G9Ju.jVSpZPX8TjuO3IO', 'user', 'ROLE_MANAGER')
