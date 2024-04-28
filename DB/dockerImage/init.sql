@@ -211,50 +211,7 @@ CREATE LOGIN WebServer
     WITH PASSWORD = 'Nj4658g465huisca';
 create user Webserver from Login WebServer
 alter role db_owner add member Webserver
-go
-/*
-create type [dbo].[ZaznamOPouziti] as table
-(
-    [Datumcas] smalldatetime NOT NULL,
-    [ZaznamopouzitiID] int NOT NULL,
-    [ZamestnanecID] int NOT NULL,
-    [ZarizeniID] int NOT NULL
-)
-go
-set implicit_transactions off
-go
 
-CREATE PROCEDURE updateSmenaInclusion @ZamestnanecIDtoCheck int, @SmenaIdToCheck int, @HalaIdToCheck int
-AS
-    if (@ZamestnanecIDtoCheck not in (SELECT T.ZamestnanecID
-                                      from Seznamzamestnancusmeny T
-                                      where T.HalaID=@HalaIdToCheck and T.SmenaID=@SmenaIdToCheck))
-
-        Insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
-        values (@HalaIdToCheck, @ZamestnanecIDtoCheck, @SmenaIdToCheck)
-go
-CREATE PROCEDURE checkSmenaInclusion @inserted ZaznamOPouziti READONLY
-AS
-begin
-    begin tran tr1
-        BEGIN TRY ;
-
-            insert into Seznamzamestnancusmeny (HalaID, ZamestnanecID, SmenaID)
-            select Z.HalaID,I.ZamestnanecID,S.SmenaID from @inserted I
-                                                inner join Smena S on I.Datumcas between S.Casod and S.Casdo
-                                                inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
-
-            insert into Zaznamopouziti (Datumcas, ZamestnanecID, ZarizeniID)
-            select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from @inserted I
-                                                inner join Smena S on I.Datumcas between S.Casod and S.Casdo
-                                                inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
-            COMMIT TRAN tr1
-        END TRY
-        BEGIN CATCH
-            SELECT ERROR_MESSAGE() AS ErrorMessage
-        end catch
-end
-*/
 go
 create procedure insertZamestnanecAdresa @jmeno varchar(40), @prijmeni varchar(40),@telefon char(12),
                                          @email varchar(40), @rodneCislo char(10), @psc char(10), @ulice varchar(20),
@@ -298,29 +255,6 @@ CREATE TRIGGER newUse ON Zaznamopouziti
                                         inner join Smena S on I.Datumcas between S.Casod and S.Casdo
                                         inner join Zarizeni Z on Z.ZarizeniID=I.ZarizeniID;
     end
-        /*
-        declare @insert ZaznamOPouziti
-        insert into @insert (Datumcas, ZaznamopouzitiID, ZamestnanecID, ZarizeniID)
-            select * from inserted
-        execute checkSmenaInclusion @insert*/
-
-/*
-
-    DECLARE @Cas smalldatetime;
-    DECLARE @Zamestnanec int;
-    DECLARE @Zarizeni int;
-
-    DECLARE insert_cursor CURSOR FOR select I.Datumcas,I.ZamestnanecID,I.ZarizeniID from inserted I inner join Smena S on I.Datumcas between S.Casod and S.Casdo
-
-    OPEN insert_cursor
-
-    FETCH NEXT FROM insert_cursor INTO @Cas,@Zamestnanec,@Zarizeni;
-    While @@FETCH_STATUS = 0
-        begin
-            EXECUTE checkSmenaInclusion @Cas, @Zamestnanec, @Zarizeni
-            FETCH NEXT FROM insert_cursor INTO @Cas, @Zamestnanec, @Zarizeni
-        end
-*/
 
 
 go;
