@@ -35,6 +35,11 @@ nav a {
     font-weight: bold;
 }
 
+a:link{color:blue}
+a:active{color:blue}
+a:visited{color:blue}
+a:hover{color:blue}
+
 #datum {
     font-size: 17px;
     position: absolute;
