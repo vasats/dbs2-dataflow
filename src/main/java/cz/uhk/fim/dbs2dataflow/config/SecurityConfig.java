@@ -1,6 +1,7 @@
 package cz.uhk.fim.dbs2dataflow.config;
 
 import cz.uhk.fim.dbs2dataflow.service.WebovyUcetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+    WebovyUcetService webovyUcetService;
+    @Autowired
+    public SecurityConfig(WebovyUcetService webovyUcetService) {
+        this.webovyUcetService = webovyUcetService;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((request) ->
@@ -33,7 +40,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return new WebovyUcetService();
+        return webovyUcetService;
     }
 
     @Bean

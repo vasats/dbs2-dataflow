@@ -11,8 +11,11 @@ import java.util.List;
 
 @Service
 public class SeznamZamestnancuService {
-    @Autowired
     SeznamZamestnancuRepository repository;
+    @Autowired
+    public SeznamZamestnancuService(SeznamZamestnancuRepository repository) {
+        this.repository = repository;
+    }
 
     public List<SeznamZamestnancuSmeny> getAllbyHalaIDSmenaID(int halaID, int smenaID){
 

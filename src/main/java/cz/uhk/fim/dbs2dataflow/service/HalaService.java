@@ -12,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class HalaService {
-    @Autowired
     HalaRepository repository;
+    @Autowired
+    public HalaService(HalaRepository repository) {
+        this.repository = repository;
+    }
 
     public Hala getByID(int halaID){
         Optional<Hala> optional = repository.findById(halaID);

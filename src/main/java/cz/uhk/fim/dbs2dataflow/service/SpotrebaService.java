@@ -12,8 +12,11 @@ import java.util.List;
 
 @Service
 public class SpotrebaService {
-    @Autowired
     private ZaznamOSpotrebeRepository repository;
+    @Autowired
+    public SpotrebaService(ZaznamOSpotrebeRepository repository) {
+        this.repository = repository;
+    }
 
     public List<ZaznamOSpotrebe> getSpotreby(){
         return (List<ZaznamOSpotrebe>) repository.findAll();

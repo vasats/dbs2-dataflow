@@ -10,8 +10,11 @@ import java.util.List;
 @Service
 public class SpotrebaInfoViewService {
 
-    @Autowired
     SpotrebaInfoViewRepository repository;
+    @Autowired
+    public SpotrebaInfoViewService(SpotrebaInfoViewRepository repository) {
+        this.repository = repository;
+    }
 
     public List<SpotrebaInfo> getByHalaId(Integer id){
         return repository.findAllByHala_HalaID(id);

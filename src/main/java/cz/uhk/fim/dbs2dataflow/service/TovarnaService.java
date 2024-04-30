@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Service
 public class TovarnaService {
-    @Autowired
     TovarnaRepository repository;
+    @Autowired
+    public TovarnaService(TovarnaRepository repository) {
+        this.repository = repository;
+    }
+
     public Tovarna getTovarnaById(Integer id){
         Optional<Tovarna> optional = repository.findById(id);
         if (optional.isPresent()){

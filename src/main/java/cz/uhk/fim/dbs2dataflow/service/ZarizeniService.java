@@ -9,8 +9,11 @@ import java.util.List;
 
 @Service
 public class ZarizeniService {
-    @Autowired
     ZarizeniRepository repository;
+    @Autowired
+    public ZarizeniService(ZarizeniRepository repository) {
+        this.repository = repository;
+    }
 
     public void addZarizeni(Zarizeni zarizeni){
         if (zarizeni.getNazev().trim().isBlank() || zarizeni.getOznaceni().trim().isBlank())

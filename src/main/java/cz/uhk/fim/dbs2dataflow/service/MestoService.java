@@ -9,8 +9,12 @@ import java.util.Optional;
 
 @Service
 public class MestoService {
-    @Autowired
     MestoRepository repository;
+    @Autowired
+    public MestoService(MestoRepository repository) {
+        this.repository = repository;
+    }
+
     public Mesto getByPsc(String psc){
         Optional<Mesto> mesto = repository.findById(psc);
         return mesto.orElse(null);

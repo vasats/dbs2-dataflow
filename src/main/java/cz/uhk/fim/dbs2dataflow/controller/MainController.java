@@ -16,35 +16,41 @@ import java.util.Set;
 
 @Controller
 public class MainController {
-    @Autowired
     SpotrebaService spotrebaService;
-
-    @Autowired
     WebovyUcetService webService;
-
-    @Autowired
     TovarnaService tovarnaService;
-
-    @Autowired
     SeznamZamestnancuService seznamZamestnancuService;
-
-    @Autowired
     HalaService halaService;
-
-    @Autowired
     SpotrebaInfoViewService spotrebaInfoViewService;
-
-    @Autowired
     ZarizeniService zarizeniService;
-
-    @Autowired
     SmenaService smenaService;
-    @Autowired
     ZamestnanecService zamestnanecService;
-    @Autowired
     AdresaService adresaService;
-    @Autowired
     MestoService mestoService;
+    @Autowired
+    public MainController(SpotrebaService spotrebaService,
+                          WebovyUcetService webService,
+                          TovarnaService tovarnaService,
+                          SeznamZamestnancuService seznamZamestnancuService,
+                          HalaService halaService,
+                          SpotrebaInfoViewService spotrebaInfoViewService,
+                          ZarizeniService zarizeniService,
+                          SmenaService smenaService,
+                          ZamestnanecService zamestnanecService,
+                          AdresaService adresaService,
+                          MestoService mestoService) {
+        this.spotrebaService = spotrebaService;
+        this.webService = webService;
+        this.tovarnaService = tovarnaService;
+        this.seznamZamestnancuService = seznamZamestnancuService;
+        this.halaService = halaService;
+        this.spotrebaInfoViewService = spotrebaInfoViewService;
+        this.zarizeniService = zarizeniService;
+        this.smenaService = smenaService;
+        this.zamestnanecService = zamestnanecService;
+        this.adresaService = adresaService;
+        this.mestoService = mestoService;
+    }
 
     @GetMapping(value = "/main")
     public String showMainPage(Model model){

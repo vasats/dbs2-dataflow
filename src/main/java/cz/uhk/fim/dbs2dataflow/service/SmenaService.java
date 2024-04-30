@@ -9,8 +9,11 @@ import java.util.List;
 
 @Service
 public class SmenaService {
-    @Autowired
     SmenaRepository repository;
+    @Autowired
+    public SmenaService(SmenaRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Smena> getAllByHalaID(Integer id){
         return (List<Smena>) repository.findAll();

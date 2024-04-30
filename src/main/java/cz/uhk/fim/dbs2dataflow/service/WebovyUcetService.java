@@ -13,8 +13,14 @@ import java.util.List;
 
 @Service
 public class WebovyUcetService implements UserDetailsService {
-    @Autowired
     WebovyUcetRepository webovyUcetRepository;
+    @Autowired
+    public WebovyUcetService(WebovyUcetRepository webovyUcetRepository) {
+        this.webovyUcetRepository = webovyUcetRepository;
+    }
+
+
+
     public List<WebovyUcet> getAll(){
         return (List<WebovyUcet>) webovyUcetRepository.findAll();
     }

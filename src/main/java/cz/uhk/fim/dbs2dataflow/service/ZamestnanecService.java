@@ -10,8 +10,11 @@ import java.util.List;
 
 @Service
 public class ZamestnanecService {
-    @Autowired
     ZamestnanecRepository repository;
+    @Autowired
+    public ZamestnanecService(ZamestnanecRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Zamestnanec> getAll(){
         return (List<Zamestnanec>) repository.findAll();
